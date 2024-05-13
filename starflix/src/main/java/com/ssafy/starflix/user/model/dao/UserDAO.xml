@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.starflix.user.model.dao.UserDAO">
+
+	<select id="login"
+		parameterType="com.ssafy.starflix.user.model.dto.UserDTO"
+		resultMap="user">
+		select user_id, user_name, user_email
+		from user
+		where user_id
+		=
+		#{userId} and user_pw=#{userPw}
+	</select>
+
+	<insert id="regist"
+		parameterType="com.ssafy.starflix.user.model.dto.UserDTO">
+		insert into user values(#{userId}, #{userPw},
+		#{userName}, #{userEmail});
+	</insert>
+
+	<select id="userInfo" parameterType="String" resultMap="user">
+		select *
+		from user where user_id = #{id}
+	</select>
+
+	<update id="changeInfo"
+		parameterType="com.ssafy.starflix.user.model.dto.UserDTO">
+		update user set user_name = #{userName},
+		user_email=#{userEmail}, user_pw = #{userPw} where user_id=#{userId}
+	</update>
+
+	<delete id="deleteUser" parameterType="String">
+		delete from user where
+		user_id=#{id}
+	</delete>
+
+	<resultMap type="com.ssafy.starflix.user.model.dto.UserDTO"
+		id="user">
+		<result property="userId" column="user_id" />
+		<result property="userPw" column="user_pw" />
+		<result property="userName" column="user_name" />
+		<result property="userEmail" column="user_email" />
+
+	</resultMap>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.starflix.board.model.dao.CommentDAO">
+
+	<insert id="insert"
+		parameterType="com.ssafy.starflix.board.model.dto.CommentDTO">
+		insert into comment (bno, writer, content)
+		values
+		(#{bno}, #{writer}, #{content})
+
+	</insert>
+	<select id="selectList" resultMap="comment">
+		select * from comment
+		where
+		bno= #{bno}
+	</select>
+
+	<update id="update"
+		parameterType="com.ssafy.starflix.board.model.dto.CommentDTO">
+		update comment
+		set content = #{content}
+		where cno = #{cno}
+	</update>
+
+	<select id="selectOne" parameterType="int" resultMap="comment">
+		select *
+		from comment
+		where cno = #{cno}
+	</select>
+
+	<delete id="delete" parameterType="int">
+		delete from comment
+		where cno = #{cno}
+	</delete>
+	
+	<resultMap
+		type="com.ssafy.starflix.board.model.dto.CommentDTO" id="comment">
+		<result property="cno" column="cno" />
+		<result property="bno" column="bno" />
+		<result property="writer" column="writer" />
+		<result property="content" column="content" />
+		<result property="registerTime" column="register_time" />
+
+	</resultMap>
+</mapper>
