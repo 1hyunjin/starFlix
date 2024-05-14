@@ -3,8 +3,8 @@
 <mapper namespace="com.ssafy.starflix.user.model.dao.UserDAO">
 
 	<select id="login"
-		parameterType="com.ssafy.starflix.user.model.dto.UserDTO"
-		resultMap="user">
+		parameterType="com.ssafy.starflix.user.model.dto.LoginDTO"
+		resultMap="loginDTO">
 		select user_id, user_name, user_email
 		from user
 		where user_id
@@ -33,6 +33,18 @@
 		delete from user where
 		user_id=#{id}
 	</delete>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set refresh_token = #{refreshToken}
+		where user_id = #{userId}
+	</update>
+
+	<resultMap type="com.ssafy.starflix.user.model.dto.LoginDTO"
+		id="loginDTO">
+		<result property="userId" column="user_id" />
+		<result property="userPw" column="user_pw" />
+	</resultMap>
 
 	<resultMap type="com.ssafy.starflix.user.model.dto.UserDTO"
 		id="user">

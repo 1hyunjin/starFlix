@@ -12,19 +12,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Schema(title = "UserDTO : 회원 정보", description = "회원의 상세 정보를 나타낸다.")
-public class UserDTO {
-	
+@Schema(title = "LoginDTO : 로그인 정보", description = "유저의 아이디와 비밀번호 정보")
+public class LoginDTO {
+
 	@Schema(description = "아이디")
 	private String userId;
-	
+
 	@Schema(description = "비밀번호")
 	private String userPw;
-	
-	@Schema(description = "이름")
-	private String userName;
-	
-	@Schema(description = "이메일")
-	private String userEmail;
-	
+
 }
