@@ -14,8 +14,8 @@
 
 	<insert id="regist"
 		parameterType="com.ssafy.starflix.user.model.dto.UserDTO">
-		insert into user values(#{userId}, #{userPw},
-		#{userName}, #{userEmail});
+		insert into user (user_id, user_pw, user_name, user_email)  
+		values(#{userId}, #{userPw}, #{userName}, #{userEmail});
 	</insert>
 
 	<select id="userInfo" parameterType="String" resultMap="user">
@@ -39,6 +39,17 @@
 		set refresh_token = #{refreshToken}
 		where user_id = #{userId}
 	</update>
+	
+	<select id="getRefreshToken"  resultType="String" parameterType="String">
+		select refresh_token
+		where user_id = #{userId}
+	</select>
+	
+	<select id="deleteRefreshToken">
+		update user
+		set refresh_token = null
+		where user_id = #{userId}
+	</select>
 
 	<resultMap type="com.ssafy.starflix.user.model.dto.LoginDTO"
 		id="loginDTO">
@@ -52,6 +63,7 @@
 		<result property="userPw" column="user_pw" />
 		<result property="userName" column="user_name" />
 		<result property="userEmail" column="user_email" />
+		<result property="refreshToken" column="refresh_token" />
 
 	</resultMap>
 </mapper>

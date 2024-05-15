@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Schema(title = "UserDTO : 회원 정보", description = "회원의 상세 정보를 나타낸다.")
+@Schema(title = "UserDTO : 회원 정보", description = "회원 정보를 나타낸다.")
 public class UserDTO {
 	
 	@Schema(description = "아이디")
@@ -26,5 +26,8 @@ public class UserDTO {
 	
 	@Schema(description = "이메일")
 	private String userEmail;
+	
+	@Schema(description = "refreshToken")
+	private String refreshToken;
 	
 }

@@ -23,4 +23,8 @@ public interface UserDAO {
 	int deleteUser(String id) throws SQLException; // 회원탈퇴
 
 	void saveRefreshToken(Map<String, String> map) throws SQLException; 
+	
+	void deleteRefreshToken(String id) throws SQLException;
+	
+	String getRefreshToken(String id) throws SQLException;
 }
