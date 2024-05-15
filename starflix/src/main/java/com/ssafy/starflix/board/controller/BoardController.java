@@ -20,9 +20,12 @@ import com.ssafy.starflix.board.model.dto.BoardDTO;
 import com.ssafy.starflix.board.model.service.BoardService;
 import com.ssafy.starflix.board.model.service.LikeService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/board")
+@Tag(name = "게시판 컨트롤러", description = "게시판 CRUD를 처리하는 클래스.")
 public class BoardController {
 	@Autowired
 	private BoardService bservice;
