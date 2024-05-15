@@ -52,7 +52,7 @@
 		<result property="content" column="content" />
 		<result property="img" column="img" />
 		<result property="lati" column="lati" />
-		<result property="longj" column="longj" />
+		<result property="longj" column="long" />
 		<result property="isPublic" column="public" />
 		<result property="registerTime" column="register_time" />
 

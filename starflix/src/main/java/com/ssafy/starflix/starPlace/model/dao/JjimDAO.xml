@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.starflix.starPlace.model.dao.JjimDAO">
+	
+	<insert id="insert">
+		insert into jjim (user_id, idx)
+		values
+		(#{userId}, #{idx})
+	</insert>
+	
+	<delete id="delete">
+		delete from jjim
+		where user_id = #{userId} and idx = #{idx}
+	</delete>
+	
+	<select id="getList" resultMap="jjim">
+		select * from jjim 
+		where user_id = #{userId}
+	</select>
+	
+	<resultMap
+		type="com.ssafy.starflix.starPlace.model.dto.JjimDTO" id="jjim">
+		<result property="userId" column="user_id" />
+		<result property="idx" column="idx" />
+	</resultMap>
+</mapper>

@@ -1,5 +1,6 @@
 package com.ssafy.starflix.starPlace.model.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,33 +12,34 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Schema(title = "StarPlaceDTO : 별자리 명소 정보", description = "별자리 명소 정보를 나타낸다.")
 public class StarPlaceDTO {
 
-	// 명소 번호
+	@Schema(description = "명소 번호")
 	private int idx;
 
-	// 명소명
+	@Schema(description = "명소명")
 	private String title;
 
-	// 명소 주소
+	@Schema(description = "명소 주소")
 	private String addr;
 
-	// 설명
+	@Schema(description = "명소 설명")
 	private String content;
 
-	// 이미지
+	@Schema(description = "명소 이미지")
 	private String img;
 
-	// 위도
+	@Schema(description = "명소 위도")
 	private double lati;
 
-	// 경도
+	@Schema(description = "명소 경도")
 	private double longj;
 
-	// 공개 여부
+	@Schema(description = "공개 여부")
 	private String isPublic;
 	
-	// 일시
+	@Schema(description = "등록 시간")
 	private String registerTime;
 	
 	
