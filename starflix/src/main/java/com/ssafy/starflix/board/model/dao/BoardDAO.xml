@@ -26,14 +26,14 @@
 	</select>
 
 	<insert id="insertOne"
-		parameterType="com.ssafy.starflix.board.model.dto.BoardDTO">
+		parameterType="com.ssafy.starflix.board.model.dto.BoardRequestDTO">
 		insert into board (title, content, writer)
 		values
 		(#{title}, #{content}, #{writer})
 	</insert>
 
 	<update id="updateOne"
-		parameterType="com.ssafy.starflix.board.model.dto.BoardDTO">
+		parameterType="com.ssafy.starflix.board.model.dto.BoardRequestDTO">
 		update board
 		set title = #{title}, content = #{content}
 		where bno = #{bno}
@@ -54,7 +54,8 @@
 
 	<update id="increaseHitCount" parameterType="int">
 		update board
-		set hit_count = hit_count+1
+		set
+		hit_count = hit_count+1
 		where bno = #{bno}
 	</update>
 
@@ -64,6 +65,15 @@
 		hit_count = hit_count-1
 		where bno = #{bno}
 	</update>
+
+	<resultMap
+		type="com.ssafy.starflix.board.model.dto.BoardRequestDTO"
+		id="boardRequest">
+		<result property="bno" column="bno" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+	</resultMap>
 
 	<resultMap type="com.ssafy.starflix.board.model.dto.BoardDTO"
 		id="board">

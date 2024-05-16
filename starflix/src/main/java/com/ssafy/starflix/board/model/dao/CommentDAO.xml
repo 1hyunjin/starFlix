@@ -3,7 +3,7 @@
 <mapper namespace="com.ssafy.starflix.board.model.dao.CommentDAO">
 
 	<insert id="insert"
-		parameterType="com.ssafy.starflix.board.model.dto.CommentDTO">
+		parameterType="com.ssafy.starflix.board.model.dto.CommentRequestDTO">
 		insert into comment (bno, writer, content)
 		values
 		(#{bno}, #{writer}, #{content})
@@ -15,8 +15,7 @@
 		bno= #{bno}
 	</select>
 
-	<update id="update"
-		parameterType="com.ssafy.starflix.board.model.dto.CommentDTO">
+	<update id="update">
 		update comment
 		set content = #{content}
 		where cno = #{cno}
@@ -32,7 +31,15 @@
 		delete from comment
 		where cno = #{cno}
 	</delete>
-	
+
+	<resultMap
+		type="com.ssafy.starflix.board.model.dto.CommentRequestDTO"
+		id="commentRequestDTO">
+		<result property="bno" column="bno" />
+		<result property="writer" column="writer" />
+		<result property="content" column="content" />
+	</resultMap>
+
 	<resultMap
 		type="com.ssafy.starflix.board.model.dto.CommentDTO" id="comment">
 		<result property="cno" column="cno" />

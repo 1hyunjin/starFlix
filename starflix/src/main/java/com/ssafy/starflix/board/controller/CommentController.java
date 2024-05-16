@@ -15,19 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.starflix.board.model.dto.CommentDTO;
+import com.ssafy.starflix.board.model.dto.CommentRequestDTO;
 import com.ssafy.starflix.board.model.service.CommentService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/comments")
+@Tag(name = "댓글 컨트롤러", description = "댓글 CRUD를 처리하는 클래스.")
 public class CommentController {
 
 	@Autowired
 	private CommentService cservice;
 
-	// 댓글 등록
+	@Operation(summary = "댓글 등록")
 	@PostMapping("")
-	public ResponseEntity<?> writeComment(@RequestBody CommentDTO comment) throws Exception {
+	public ResponseEntity<?> writeComment(@RequestBody @Parameter(description = "CommentRequestDTO") CommentRequestDTO comment) throws Exception {
 		try {
 			cservice.writeComment(comment);
 			return ResponseEntity.ok(HttpStatus.OK);
@@ -36,9 +42,9 @@ public class CommentController {
 		}
 	}
 
-	// 게시글에 대한 댓글 리스트 조회
+	@Operation(summary = "게시글에 대한 댓글 리스트 조회")
 	@GetMapping("/list/{bno}")
-	public ResponseEntity<?> getComments(@PathVariable("bno") int bno) throws Exception {
+	public ResponseEntity<?> getComments(@PathVariable("bno") @Parameter(description = "게시글번호") int bno) throws Exception {
 		try {
 			List<CommentDTO> comments = cservice.getComments(bno);
 			return ResponseEntity.ok().body(comments);
@@ -47,9 +53,9 @@ public class CommentController {
 		}
 	}
 
-	// 댓글 상세 조회
+	@Operation(summary = "댓글 상세 조회")
 	@GetMapping("/{cno}")
-	public ResponseEntity<?> getComment(@PathVariable("cno") int cno) {
+	public ResponseEntity<?> getComment(@PathVariable("cno") @Parameter(description = "댓글번호") int cno) {
 		try {
 			CommentDTO comment = cservice.readComment(cno);
 			return ResponseEntity.ok().body(comment);
@@ -58,21 +64,22 @@ public class CommentController {
 		}
 	}
 
-	// 댓글 수정
+	@Operation(summary = "댓글 수정")
 	@PutMapping("/{cno}")
-	public ResponseEntity<?> updateComment(@PathVariable("cno") int cno, @RequestBody CommentDTO comment)
+	public ResponseEntity<?> updateComment(@PathVariable("cno") @Parameter(description = "댓글번호") int cno, 
+							@RequestBody CommentRequestDTO comment)
 			throws Exception {
 		try {
-			cservice.updateComment(comment);
+			cservice.updateComment(cno, comment);
 			return ResponseEntity.ok(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
 	}
 
-	// 댓글 삭제
+	@Operation(summary = "댓글 삭제")
 	@DeleteMapping("/{cno}")
-	public ResponseEntity<?> deleteComment(@PathVariable("cno") int cno) throws Exception {
+	public ResponseEntity<?> deleteComment(@PathVariable("cno") @Parameter(description = "댓글번호") int cno) throws Exception {
 		try {
 			cservice.deleteComment(cno);
 			return ResponseEntity.ok(HttpStatus.OK);

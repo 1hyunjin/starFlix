@@ -12,6 +12,7 @@ import com.ssafy.starflix.starPlace.model.dto.JjimDTO;
 import com.ssafy.starflix.user.model.dao.UserDAO;
 import com.ssafy.starflix.user.model.dto.LoginDTO;
 import com.ssafy.starflix.user.model.dto.UserDTO;
+import com.ssafy.starflix.user.model.dto.UserRequestDTO;
 
 @Service
 public class UserService {
@@ -26,7 +27,7 @@ public class UserService {
 		return udao.login(dto);
 	}
 
-	public int regist(UserDTO dto) throws Exception {
+	public int regist(UserRequestDTO dto) throws Exception {
 		return udao.regist(dto);
 	}
 
@@ -34,7 +35,7 @@ public class UserService {
 		return udao.userInfo(id);
 	}
 
-	public int changeInfo(UserDTO dto) throws Exception {
+	public int changeInfo(UserRequestDTO dto) throws Exception {
 		return udao.changeInfo(dto);
 	}
 

@@ -138,7 +138,7 @@ public class StarPlaceController {
 										@RequestParam("userId") @Parameter(description = "회원 아이디") String userId){
 		try {
 			sservice.unJjimPlace(userId, idx);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			return ResponseEntity.ok(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

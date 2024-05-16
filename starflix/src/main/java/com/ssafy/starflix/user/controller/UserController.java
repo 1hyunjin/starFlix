@@ -21,6 +21,7 @@ import com.ssafy.starflix.starPlace.model.dto.JjimDTO;
 import com.ssafy.starflix.starPlace.model.service.StarPlaceService;
 import com.ssafy.starflix.user.model.dto.LoginDTO;
 import com.ssafy.starflix.user.model.dto.UserDTO;
+import com.ssafy.starflix.user.model.dto.UserRequestDTO;
 import com.ssafy.starflix.user.model.service.UserService;
 import com.ssafy.starflix.util.JWTUtil;
 
@@ -38,7 +39,7 @@ public class UserController {
 
 	@Autowired
 	private UserService uservice;
-	
+
 	@Autowired
 	private StarPlaceService sservice;
 
@@ -68,7 +69,7 @@ public class UserController {
 
 				// JSON으로 token을 전달
 				resultMap.put("access-token", accessToken);
-				resultMap.put("refresh-token", refreshToken);
+				// resultMap.put("refresh-token", refreshToken);
 
 				status = HttpStatus.CREATED; // created -> 201
 
@@ -87,10 +88,10 @@ public class UserController {
 	// 회원가입
 	@Operation(summary = "회원가입", description = "사용자 정보 입력 후 회원가입 진행")
 	@PostMapping()
-	public ResponseEntity<?> register(@RequestBody @Parameter(description = "호원가입 시 필요한 정보.") UserDTO dto) {
+	public ResponseEntity<?> register(@RequestBody @Parameter(description = "호원가입 시 필요한 정보.") UserRequestDTO dto) {
 		try {
 			uservice.regist(dto);
-			return ResponseEntity.ok(HttpStatus.OK);
+			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
@@ -100,70 +101,31 @@ public class UserController {
 	@Operation(summary = "회원정보", description = "회원 정보를 담은 토큰을 반환한다. ")
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> userInfo(@PathVariable("userId") @Parameter(description = "인증할 회원 아이디") String id,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.ACCEPTED;
-		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
-			log.info("사용 가능한 토큰");
-			try {
-				UserDTO userDTO = uservice.userInfo(id);
-				resultMap.put("userInfo", userDTO);
-				status = HttpStatus.OK;
-			} catch (Exception e) {
-				log.error("정보 조회 실패 : ", e);
-				resultMap.put("message", e.getMessage());
-				status = HttpStatus.INTERNAL_SERVER_ERROR;
-			}
-		} else {
-			log.error("사용 불가능한 토큰!");
-			status = HttpStatus.UNAUTHORIZED;
-		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		UserDTO userDTO = uservice.userInfo(id);
+		resultMap.put("userInfo", userDTO);
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 
 	// 회원정보 수정
 	@Operation(summary = "회원정보 수정", description = "토큰 확인 후 회원정보 수정")
 	@PutMapping("/{userId}")
 	public ResponseEntity<?> changeInfo(@PathVariable("userId") @Parameter(description = "인증할 회원 아이디") String userId,
-			@RequestBody @Parameter(description = "수정한 회원 정보") UserDTO userDTO, HttpServletRequest request) {
-		HttpStatus status = HttpStatus.ACCEPTED;
-		if (jwtUtil.checkToken(request.getHeader("Authorization"))) { // jwtUtil.checkToken(request.getHeader("Authorization"))
-			log.info("사용 가능한 토큰");
-			try {
-				uservice.changeInfo(userDTO);
-				status = HttpStatus.OK;
-			} catch (Exception e) {
-				log.error("정보 수정 실패: ", e);
-				status = HttpStatus.INTERNAL_SERVER_ERROR;
-			}
-		} else {
-			log.error("사용 불가능한 토큰");
-			status = HttpStatus.UNAUTHORIZED;
-		}
-
-		return ResponseEntity.status(status).build();
+			@RequestBody @Parameter(description = "수정한 회원 정보") UserRequestDTO userRequestDTO, HttpServletRequest request)
+			throws Exception {
+		uservice.changeInfo(userRequestDTO);
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	// 회원정보 삭제
 	@Operation(summary = "회원정보 삭제", description = "토큰 확인 후 회원정보 삭제")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<?> deleteUser(@PathVariable("userId") @Parameter(description = "인증할 회원 아이디") String userId,
-			HttpServletRequest request) {
-		HttpStatus status = HttpStatus.ACCEPTED;
-		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
-			log.info("사용 가능한 토큰");
-			try {
-				uservice.deleteUser(userId);
-				status = HttpStatus.OK;
-			} catch (Exception e) {
-				log.error("정보 수정 실패: ", e);
-				status = HttpStatus.INTERNAL_SERVER_ERROR;
-			}
-		} else {
-			log.error("사용 불가능한 토큰");
-			status = HttpStatus.UNAUTHORIZED;
-		}
-		return ResponseEntity.ok(status);
+			HttpServletRequest request) throws Exception {
+
+		uservice.deleteUser(userId);
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	// 로그아웃
@@ -175,13 +137,14 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
 			uservice.deleteRefreshToken(userId);
-			status = HttpStatus.OK;
+			return ResponseEntity.status(HttpStatus.OK).build();
+			
 		} catch (Exception e) {
 			log.error("로그아웃 실패 : {}", e);
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
 		}
-		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@Operation(summary = "Access Token 재발급", description = "만료된 access token 을 재발급 받는다.")
@@ -192,24 +155,22 @@ public class UserController {
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refreshToken");
 		log.debug("token : {}, userId : {} ", token, userId);
-		if (jwtUtil.checkToken(token)) {
-			if (token.equals(uservice.getRefreshToken(userId))) {
-				String accessToken = jwtUtil.createAccessToken(userId);
-				log.debug("accessToken : {}", accessToken);
-				log.debug("정상적으로 accessToken 재발급!!");
-				resultMap.put("access-token", accessToken);
-				status = HttpStatus.OK;
-			}
-		} else {
-			log.debug("refresh token 도 사용 불가!!");
-			status = HttpStatus.UNAUTHORIZED;
+
+		if (token.equals(uservice.getRefreshToken(userId))) {
+			String accessToken = jwtUtil.createAccessToken(userId);
+			log.debug("accessToken : {}", accessToken);
+			log.debug("정상적으로 accessToken 재발급!!");
+			resultMap.put("access-token", accessToken);
+			status = HttpStatus.OK;
 		}
+
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@Operation(summary = "찜 리스트 조회")
 	@GetMapping("/{userId}/starPlaces")
-	public ResponseEntity<?> getJjimList(@PathVariable("userId") @Parameter(description = "유저 아이디")  String userId) throws Exception {
+	public ResponseEntity<?> getJjimList(@PathVariable("userId") @Parameter(description = "유저 아이디") String userId)
+			throws Exception {
 		try {
 			List<JjimDTO> list = uservice.getJjimList(userId);
 			return ResponseEntity.ok().body(list);

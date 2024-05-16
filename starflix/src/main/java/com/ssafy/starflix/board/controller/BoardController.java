@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.starflix.board.model.dto.BoardDTO;
+import com.ssafy.starflix.board.model.dto.BoardRequestDTO;
 import com.ssafy.starflix.board.model.service.BoardService;
 import com.ssafy.starflix.board.model.service.LikeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -33,26 +36,25 @@ public class BoardController {
 	@Autowired
 	private LikeService lservice;
 
-	// 커뮤니티 게시글 목록
+	@Operation(summary = "커뮤니티 게시글 목록조회")
 	@GetMapping()
-	public ResponseEntity<?> getList(@RequestParam Map<String, String> map) throws Exception {
-//		log.info("getList map = {}", map);
+	public ResponseEntity<?> getList(@RequestParam @Parameter(description = "검색 조건(타입(title, writer) , 키워드).") Map<String, String> map) throws Exception {
 
 		List<BoardDTO> list = bservice.getList(map);
 
 		return ResponseEntity.ok().body(list);
 	}
 
-	// 게시글 글보기
+	@Operation(summary = "게시글 글 보기")
 	@GetMapping("/{bno}")
-	public ResponseEntity<BoardDTO> getArticle(@PathVariable("bno") int bno) throws Exception {
+	public ResponseEntity<BoardDTO> getArticle(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno) throws Exception {
 		bservice.updateReadCount(bno);
 		return ResponseEntity.ok().body(bservice.getArticle(bno));
 	}
 
-	// 게시글 글 작성
+	@Operation(summary = "게시글 글 작성")
 	@PostMapping("/write")
-	public ResponseEntity<?> writeArticle(@RequestBody(required = false) BoardDTO board) throws Exception {
+	public ResponseEntity<?> writeArticle(@RequestBody(required = false) @Parameter(description = "BoardRequestDTO") BoardRequestDTO board) throws Exception {
 		try {
 			bservice.writeArticle(board);
 			return ResponseEntity.ok(HttpStatus.OK);
@@ -61,9 +63,9 @@ public class BoardController {
 		}
 	}
 
-	// 게시글 글 수정
+	@Operation(summary = "게시글 글 수정")
 	@PutMapping("/{bno}")
-	public ResponseEntity<?> modifyArticle(@RequestBody BoardDTO board) throws Exception {
+	public ResponseEntity<?> modifyArticle(@RequestBody @Parameter(description = "BoardRequestDTO") BoardRequestDTO board) throws Exception {
 		try {
 			bservice.modifyArticle(board);
 			return ResponseEntity.ok(HttpStatus.OK);
@@ -72,17 +74,17 @@ public class BoardController {
 		}
 	}
 
-	// 게시글 글 삭제
+	@Operation(summary = "게시글 글 삭제")
 	@DeleteMapping("/{bno}")
-	public ResponseEntity<?> deleteArticle(@PathVariable("bno") int bno) throws Exception {
+	public ResponseEntity<?> deleteArticle(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno) throws Exception {
 		bservice.deleteArticle(bno);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	// 사용자가 해당 게시글에 좋아요를 했는지의 여부 확인
+	@Operation(summary = "사용자가 해당 게시글에 좋아요를 했는지의 여부 확인")
 	@GetMapping("/{bno}/like")
-	public ResponseEntity<Integer> isArticleLikedByUser(@PathVariable("bno") int bno,
-			@RequestParam("userId") String userId) throws Exception {
+	public ResponseEntity<Integer> isArticleLikedByUser(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno,
+			@RequestParam("userId") @Parameter(description = "유저 아이디") String userId) throws Exception {
 		int isLiked = lservice.isLikedByUser(bno, userId);
 		return ResponseEntity.ok(isLiked); // 좋아요 했으면 1, 안했으면 0
 	}
@@ -98,9 +100,9 @@ public class BoardController {
 //		}
 //	}
 
-	// 좋아요 증가
+	@Operation(summary = "좋아요 증가")
 	@PostMapping("/{bno}/like")
-	public ResponseEntity<?> likeArticle(@PathVariable("bno") int bno, @RequestParam("userId") String userId) {
+	public ResponseEntity<?> likeArticle(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno, @RequestParam("userId") @Parameter(description = "유저 아이디") String userId) {
 		try {
 			bservice.likeArticle(bno, userId);
 			return ResponseEntity.ok(HttpStatus.OK);
@@ -109,9 +111,9 @@ public class BoardController {
 		}
 	}
 
-	// 좋아요 감소
+	@Operation(summary = "좋아요 감소")
 	@PostMapping("/{bno}/dislike")
-	public ResponseEntity<?> dislikeArticle(@PathVariable("bno") int bno, @RequestParam("userId") String userId) {
+	public ResponseEntity<?> dislikeArticle(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno, @RequestParam("userId") @Parameter(description = "유저 아이디") String userId) {
 		try {
 			bservice.dislikeArtice(bno, userId);
 			return ResponseEntity.ok(HttpStatus.OK);

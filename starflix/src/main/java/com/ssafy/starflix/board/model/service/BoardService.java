@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ssafy.starflix.board.model.dao.BoardDAO;
 import com.ssafy.starflix.board.model.dto.BoardDTO;
+import com.ssafy.starflix.board.model.dto.BoardRequestDTO;
 
 @Service
 public class BoardService {
@@ -28,11 +29,11 @@ public class BoardService {
 		return bdao.selectOne(bno);
 	}
 
-	public void writeArticle(BoardDTO board) throws Exception {
+	public void writeArticle(BoardRequestDTO board) throws Exception {
 		bdao.insertOne(board);
 	}
 
-	public void modifyArticle(BoardDTO board) throws Exception {
+	public void modifyArticle(BoardRequestDTO board) throws Exception {
 		bdao.updateOne(board);
 	}
 

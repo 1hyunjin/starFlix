@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.starflix.board.model.dto.BoardDTO;
+import com.ssafy.starflix.board.model.dto.BoardRequestDTO;
 
 @Mapper
 public interface BoardDAO {
@@ -18,10 +19,10 @@ public interface BoardDAO {
 	BoardDTO selectOne(int bno) throws SQLException;
 
 	// 게시글 작성
-	void insertOne(BoardDTO board) throws SQLException;
+	void insertOne(BoardRequestDTO board) throws SQLException;
 
 	// 게시글 수정
-	void updateOne(BoardDTO board) throws SQLException;
+	void updateOne(BoardRequestDTO board) throws SQLException;
 
 	// 게시글 삭제
 	void deleteOne(int bno) throws SQLException;
