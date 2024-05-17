@@ -1,5 +1,6 @@
 package com.ssafy.starflix.starPlace.model.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.starflix.starPlace.model.dao.JjimDAO;
 import com.ssafy.starflix.starPlace.model.dao.StarPlaceDAO;
 import com.ssafy.starflix.starPlace.model.dto.StarPlaceDTO;
+import com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO;
 
 @Service
 public class StarPlaceService {
@@ -28,7 +30,11 @@ public class StarPlaceService {
 		param.put("keyword", map.get("keyword") == null ? "" : map.get("keyword"));
 		return sdao.selectList(param);
 	}
-
+	
+	public int regist(StarPlaceRequestDTO requestDTO) throws Exception {
+		return sdao.insert(requestDTO);
+	}
+	
 	// 명소 상세 조회
 	public StarPlaceDTO read(int idx) throws Exception {
 		return sdao.selectOne(idx);

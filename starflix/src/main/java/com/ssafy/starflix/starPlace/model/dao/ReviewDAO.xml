@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.starflix.starPlace.model.dao.ReviewDAO">
+	
+	<select id="selectAll" resultMap="review">
+		select * from review where idx = #{idx}
+		order by rno desc;
+	</select>
+
+	<resultMap
+		type="com.ssafy.starflix.starPlace.model.dto.ReviewDTO" id="review">
+		<result property="rno" column="rno" />
+		<result property="idx" column="idx" />
+		<result property="title" column="title" />
+		<result property="writer" column="writer" />
+		<result property="img" column="img" />
+		<result property="registerTime" column="register_time" />
+	</resultMap>
+</mapper>

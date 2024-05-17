@@ -7,11 +7,14 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.starflix.starPlace.model.dto.StarPlaceDTO;
+import com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO;
 
 @Mapper
 public interface StarPlaceDAO {
 	
 	List<StarPlaceDTO> selectList(Map<String, String> param) throws SQLException;
+	
+	int insert(StarPlaceRequestDTO requestDTO) throws SQLException;
 	
 	StarPlaceDTO selectOne(int idx) throws SQLException;
 	

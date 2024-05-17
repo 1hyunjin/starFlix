@@ -17,6 +17,8 @@ public class WeatherDTO {
 	
 	private String fcsDate;
 	
+	private String fcsTime;
+	
 	private String weatherState;
 	
 	private String rainyState;

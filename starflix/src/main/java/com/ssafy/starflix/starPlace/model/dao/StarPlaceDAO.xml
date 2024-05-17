@@ -3,50 +3,54 @@
 <mapper
 	namespace="com.ssafy.starflix.starPlace.model.dao.StarPlaceDAO">
 
-
 	<select id="selectList">
 		select * from star_place
-		  where public  = 'Y'
+		where public = 'Y'
 		<include refid="search"></include>
 		order by idx desc;
 	</select>
-	
+
 	<sql id="search">
 		<if test="keyword != null and keyword != ''">
 			<if test="type == 'title' ">
-				and title like concat('%', #{keyword}, '%') 
+				and title like concat('%', #{keyword}, '%')
 			</if>
 			<if test="type != 'title' ">
-				and addr like concat('%', #{keyword}, '%') 
+				and addr like concat('%', #{keyword}, '%')
 			</if>
 		</if>
 	</sql>
 	
+	<insert id="insert" parameterType="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO">
+		insert into star_place (title, addr, writer, content, img, lati, `long`, public)
+		values (#{title}, #{addr},#{writer}, #{content}, #{img}, #{lati}, #{longj}, #{isPublic})
+	</insert>
+
 	<select id="selectOne" resultMap="place">
 		select * from star_place
-		 where idx = #{idx} and public = 'Y';
+		where idx = #{idx} and public = 'Y';
 	</select>
-	
+
 	<update id="updatePublic">
 		update star_place
 		set public = 'Y'
 		where idx = #{idx}
 	</update>
-	
+
 	<update id="updatePrivate">
 		update star_place
 		set public = 'N'
 		where idx = #{idx}
 	</update>
-	
+
 	<delete id="deleteOne">
 		delete from star_place
 		where idx = #{idx}
 	</delete>
 
 	<resultMap
-		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceDTO" id="place">
-		<result property="idx" column="idx" />
+		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO"
+		id="starPlaceRequestDTO">
 		<result property="title" column="title" />
 		<result property="addr" column="addr" />
 		<result property="content" column="content" />
@@ -54,7 +58,20 @@
 		<result property="lati" column="lati" />
 		<result property="longj" column="long" />
 		<result property="isPublic" column="public" />
-		<result property="registerTime" column="register_time" />
+		<result property="writer" column="writer" />
+	</resultMap>
 
+	<resultMap
+		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceDTO" id="place">
+		<result property="idx" column="idx" />
+		<result property="title" column="title" />
+		<result property="addr" column="addr" />
+		<result property="writer" column="writer" />
+		<result property="content" column="content" />
+		<result property="img" column="img" />
+		<result property="lati" column="lati" />
+		<result property="longj" column="long" />
+		<result property="isPublic" column="public" />
+		<result property="registerTime" column="register_time" />
 	</resultMap>
 </mapper>

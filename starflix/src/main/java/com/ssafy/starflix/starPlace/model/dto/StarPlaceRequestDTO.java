@@ -12,20 +12,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Schema(title = "StarPlaceDTO : 별자리 명소 정보", description = "별자리 명소 정보를 나타낸다.")
-public class StarPlaceDTO {
-
-	@Schema(description = "명소 번호")
-	private int idx;
+@Schema(title = "StarPlaceRequestDTO : 명소등록시 요청DTO")
+public class StarPlaceRequestDTO {
 	
-	@Schema(description = "작성자")
-	private String writer;
-
 	@Schema(description = "명소명")
 	private String title;
 
 	@Schema(description = "명소 주소")
 	private String addr;
+	
+	@Schema(description = "작성자")
+	private String writer;
 
 	@Schema(description = "명소 설명")
 	private String content;
@@ -41,8 +38,5 @@ public class StarPlaceDTO {
 
 	@Schema(description = "공개 여부")
 	private String isPublic;
-	
-	@Schema(description = "등록 시간")
-	private String registerTime;
-	
+
 }

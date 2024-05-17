@@ -1,4 +1,4 @@
-package com.ssafy.starflix.weather;
+package com.ssafy.starflix.weather.model.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -7,7 +7,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,8 +40,7 @@ public class WeatherService {
 			System.out.println(Arrays.toString(region));
 
 			String jsonResponse = getInfoWeather(baseDate, nx, ny);
-			List<WeatherDTO> weatherData = parseWeatherData(jsonResponse, regionName);
-			allWeatherData.addAll(weatherData);
+			allWeatherData.addAll(parseWeatherData(jsonResponse, regionName));
 		}
 		return allWeatherData;
 	}
@@ -50,11 +51,11 @@ public class WeatherService {
 		StringBuilder urlBuilder = new StringBuilder(apiUrl); /* URL */
 		urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + serviceKey);
 		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-				+ URLEncoder.encode("12", "UTF-8")); /* 한 페이지 결과 수 */
+				+ URLEncoder.encode("1000", "UTF-8")); /* 한 페이지 결과 수 */
 		urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "="
 				+ URLEncoder.encode("JSON", "UTF-8")); /* 요청자료형식(XML/JSON) Default: XML */
 		urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "=" + URLEncoder.encode(baseDate, "UTF-8"));
-		urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "=" + URLEncoder.encode("2000", "UTF-8"));
+		urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "=" + URLEncoder.encode("0500", "UTF-8"));
 		urlBuilder.append(
 				"&" + URLEncoder.encode("nx", "UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8")); /* 예보지점의 X 좌표값 */
 		urlBuilder.append(
@@ -79,13 +80,14 @@ public class WeatherService {
 		conn.disconnect();
 
 		String result = sb.toString();
-		System.out.println("API Response: " + result);
+//		System.out.println("API Response: " + result);
 
 		return result;
 	}
 
 	public List<WeatherDTO> parseWeatherData(String jsonResponse, String regionName) throws Exception {
 		List<WeatherDTO> weatherDTOList = new ArrayList<>();
+		Map<String, WeatherDTO> weatherMap = new HashMap<>();
 
 		try {
 			JSONObject jsonObject = new JSONObject(jsonResponse);
@@ -100,53 +102,30 @@ public class WeatherService {
 				String category = item.getString("category");
 
 				if ("2100".equals(fcstTime) && ("SKY".equals(category) || "PTY".equals(category))) {
-					WeatherDTO weatherDTO = new WeatherDTO();
+					String fcstDate = item.getString("fcstDate");
+					String key = regionName + "_" + fcstDate;
+
+					WeatherDTO weatherDTO = weatherMap.getOrDefault(key, new WeatherDTO());
 					weatherDTO.setRegion(regionName);
-					weatherDTO.setFcsDate(item.getString("fcstDate"));
+					weatherDTO.setFcsDate(fcstDate);
+					weatherDTO.setFcsTime(fcstTime);
+
 					if ("SKY".equals(category)) {
 						weatherDTO.setWeatherState(item.getString("fcstValue"));
 					} else if ("PTY".equals(category)) {
 						weatherDTO.setRainyState(item.getString("fcstValue"));
 					}
-					weatherDTOList.add(weatherDTO);
+
+					weatherMap.put(key, weatherDTO);
 				}
 			}
+			System.out.println(weatherMap.values());
+			weatherDTOList.addAll(weatherMap.values());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("weatherDTOList : " + weatherDTOList);
 		return weatherDTOList;
 	}
-
-//	WeatherDTO weatherInfo = new WeatherDTO();
-//	
-//    //=======이 밑에 부터는 json에서 데이터 파싱해 오는 부분이다=====//
-//    // response 키를 가지고 데이터를 파싱
-//    JSONObject jsonObj_1 = new JSONObject(result);
-//    String response = jsonObj_1.getString("response");
-//
-//    // response 로 부터 body 찾기
-//    JSONObject jsonObj_2 = new JSONObject(response);
-//    String body = jsonObj_2.getString("body");
-//
-//    // body 로 부터 items 찾기
-//    JSONObject jsonObj_3 = new JSONObject(body);
-//    String items = jsonObj_3.getString("items");
-//
-//    // items로 부터 itemlist 를 받기 
-//    JSONObject jsonObj_4 = new JSONObject(items);
-//    JSONArray jsonArray = jsonObj_4.getJSONArray("item");
-//
-//    for(int i=0;i<jsonArray.length();i++){
-//        jsonObj_4 = jsonArray.getJSONObject(i);
-//        String fcstValue = jsonObj_4.getString("fcstValue");
-//        String category = jsonObj_4.getString("category");
-//
-//        if(category.equals("SKY")){
-//            weatherInfo.setWeatherState(fcstValue);
-//        }
-//        else if(category.equals("PTY")) {
-//        	weatherInfo.setRainyState(fcstValue);
-//        }
-//    }
 }
