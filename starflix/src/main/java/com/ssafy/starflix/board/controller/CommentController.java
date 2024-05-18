@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.starflix.board.model.dto.CommentDTO;
@@ -43,8 +44,8 @@ public class CommentController {
 	}
 
 	@Operation(summary = "게시글에 대한 댓글 리스트 조회")
-	@GetMapping("/list/{bno}")
-	public ResponseEntity<?> getComments(@PathVariable("bno") @Parameter(description = "게시글번호") int bno) throws Exception {
+	@GetMapping("")
+	public ResponseEntity<?> getComments(@RequestParam("bno") @Parameter(description = "게시글번호") int bno) throws Exception {
 		try {
 			List<CommentDTO> comments = cservice.getComments(bno);
 			return ResponseEntity.ok().body(comments);

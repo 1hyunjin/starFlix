@@ -7,8 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.starflix.starPlace.model.dao.JjimDAO;
-import com.ssafy.starflix.starPlace.model.dto.JjimDTO;
+import com.ssafy.starflix.jjim.model.dao.JjimDAO;
+import com.ssafy.starflix.jjim.model.dto.JjimDTO;
 import com.ssafy.starflix.user.model.dao.UserDAO;
 import com.ssafy.starflix.user.model.dto.LoginDTO;
 import com.ssafy.starflix.user.model.dto.UserDTO;
@@ -20,8 +20,6 @@ public class UserService {
 	@Autowired
 	private UserDAO udao;
 	
-	@Autowired
-	private JjimDAO jdao;
 
 	public LoginDTO login(LoginDTO dto) throws Exception {
 		return udao.login(dto);
@@ -59,7 +57,4 @@ public class UserService {
 		udao.deleteRefreshToken(userId);
 	}
 	
-	public List<JjimDTO> getJjimList(String userId) throws Exception{
-		return jdao.getList(userId);
-	}
 }

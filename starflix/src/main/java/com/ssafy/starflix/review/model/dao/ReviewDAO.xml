@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.ssafy.starflix.starPlace.model.dao.ReviewDAO">
-	
+<mapper namespace="com.ssafy.starflix.review.model.dao.ReviewDAO">
+
 	<select id="selectAll" resultMap="review">
-		select * from review where idx = #{idx}
+		select * from review
+		<include refid="search"></include>
 		order by rno desc;
 	</select>
 
+	<sql id="search">
+		<if test="starPlace != null and userId == ''">
+			where idx = #{starPlace}
+		</if>
+		<if test="userId != null and starPlace == ''">
+			where writer = #{userId}
+		</if>
+	</sql>
+
+	<insert id="insert"
+		parameterType="com.ssafy.starflix.review.model.dto.ReviewRequestDTO">
+		insert into review
+		(idx, title, content, writer)
+		values(#{idx}, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<update id="update">
+		update review
+		 SET title = #{reviewDTO.title},
+            content = #{reviewDTO.content},
+            writer = #{reviewDTO.writer}
+        WHERE rno = #{rno}
+	</update>
+	
+	<delete id="deleteOne">
+		delete from review
+		where rno = #{rno}
+	</delete>
+	
 	<resultMap
-		type="com.ssafy.starflix.starPlace.model.dto.ReviewDTO" id="review">
+		type="com.ssafy.starflix.review.model.dto.ReviewRequestDTO"
+		id="reviewRequest">
+		<result property="idx" column="idx" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+	</resultMap>
+	
+	<resultMap
+		type="com.ssafy.starflix.review.model.dto.ReviewDTO" id="review">
 		<result property="rno" column="rno" />
 		<result property="idx" column="idx" />
 		<result property="title" column="title" />

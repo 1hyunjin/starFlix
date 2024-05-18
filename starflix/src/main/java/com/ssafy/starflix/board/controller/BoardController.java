@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/board")
+@RequestMapping("/boards")
 @Tag(name = "게시판 컨트롤러", description = "게시판 CRUD를 처리하는 클래스.")
 public class BoardController {
 	@Autowired
@@ -46,7 +46,7 @@ public class BoardController {
 	}
 
 	@Operation(summary = "게시글 글 보기")
-	@GetMapping("/{bno}")
+	@GetMapping("/{bno}")  
 	public ResponseEntity<BoardDTO> getArticle(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno) throws Exception {
 		bservice.updateReadCount(bno);
 		return ResponseEntity.ok().body(bservice.getArticle(bno));
@@ -65,7 +65,7 @@ public class BoardController {
 
 	@Operation(summary = "게시글 글 수정")
 	@PutMapping("/{bno}")
-	public ResponseEntity<?> modifyArticle(@RequestBody @Parameter(description = "BoardRequestDTO") BoardRequestDTO board) throws Exception {
+	public ResponseEntity<?> modifyArticle(@PathVariable("bno") int bno, @RequestBody @Parameter(description = "BoardRequestDTO") BoardRequestDTO board) throws Exception {
 		try {
 			bservice.modifyArticle(board);
 			return ResponseEntity.ok(HttpStatus.OK);
@@ -81,7 +81,7 @@ public class BoardController {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	@Operation(summary = "사용자가 해당 게시글에 좋아요를 했는지의 여부 확인")
+	@Operation(summary = "사용자가 해당 게시글에 좋아요를 했는지의 여부 확인") 
 	@GetMapping("/{bno}/like")
 	public ResponseEntity<Integer> isArticleLikedByUser(@PathVariable("bno") @Parameter(description = "게시글 번호") int bno,
 			@RequestParam("userId") @Parameter(description = "유저 아이디") String userId) throws Exception {

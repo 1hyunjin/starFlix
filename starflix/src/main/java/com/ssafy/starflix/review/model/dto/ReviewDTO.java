@@ -1,4 +1,4 @@
-package com.ssafy.starflix.starPlace.model.dto;
+package com.ssafy.starflix.review.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -23,6 +23,9 @@ public class ReviewDTO {
 	private String title;
 	
 	@Schema(description = "내용")
+	private String content;
+	
+	@Schema(description = "작성자")
 	private String writer;
 	
 	@Schema(description = "이미지")

@@ -1,6 +1,5 @@
 package com.ssafy.starflix.starPlace.model.service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.starflix.starPlace.model.dao.JjimDAO;
 import com.ssafy.starflix.starPlace.model.dao.StarPlaceDAO;
 import com.ssafy.starflix.starPlace.model.dto.StarPlaceDTO;
 import com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO;
@@ -19,9 +17,6 @@ public class StarPlaceService {
 	@Autowired
 	private StarPlaceDAO sdao;
 
-	@Autowired
-	private JjimDAO jdao;
-
 	// type (title, addr) & keyword로 목록 조회
 	public List<StarPlaceDTO> getList(Map<String, String> map) throws Exception {
 
@@ -30,11 +25,11 @@ public class StarPlaceService {
 		param.put("keyword", map.get("keyword") == null ? "" : map.get("keyword"));
 		return sdao.selectList(param);
 	}
-	
+
 	public int regist(StarPlaceRequestDTO requestDTO) throws Exception {
 		return sdao.insert(requestDTO);
 	}
-	
+
 	// 명소 상세 조회
 	public StarPlaceDTO read(int idx) throws Exception {
 		return sdao.selectOne(idx);
@@ -53,15 +48,5 @@ public class StarPlaceService {
 	// 명소 삭제
 	public int deletePlace(int idx) throws Exception {
 		return sdao.deleteOne(idx);
-	}
-
-	// 명소 찜하기
-	public void jjimPlace(String userId, int idx) throws Exception {
-		jdao.insert(userId, idx);
-	}
-
-	// 명소 찜 취소하기
-	public void unJjimPlace(String userId, int idx) throws Exception {
-		jdao.delete(userId, idx);
 	}
 }
