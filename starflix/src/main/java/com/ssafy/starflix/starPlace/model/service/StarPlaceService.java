@@ -49,4 +49,9 @@ public class StarPlaceService {
 	public int deletePlace(int idx) throws Exception {
 		return sdao.deleteOne(idx);
 	}
+	
+	//Best 명소 조회 10건
+	public List<StarPlaceDTO> getBestList() throws Exception{
+		return sdao.selectBestList();
+	}
 }

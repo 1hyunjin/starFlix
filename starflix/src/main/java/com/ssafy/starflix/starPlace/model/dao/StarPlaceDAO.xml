@@ -20,15 +20,19 @@
 			</if>
 		</if>
 	</sql>
-	
-	<insert id="insert" parameterType="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO">
-		insert into star_place (title, addr, writer, content, img, lati, `long`, public)
-		values (#{title}, #{addr},#{writer}, #{content}, #{img}, #{lati}, #{longj}, #{isPublic})
+
+	<insert id="insert"
+		parameterType="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO">
+		insert into star_place (title, addr, writer, content,
+		img, lati, `long`, public)
+		values (#{title}, #{addr},#{writer},
+		#{content}, #{img}, #{lati}, #{longj}, #{isPublic})
 	</insert>
 
 	<select id="selectOne" resultMap="place">
 		select * from star_place
-		where idx = #{idx} and public = 'Y';
+		where
+		idx = #{idx} and public = 'Y';
 	</select>
 
 	<update id="updatePublic">
@@ -47,6 +51,20 @@
 		delete from star_place
 		where idx = #{idx}
 	</delete>
+
+	<select id="selectBestList" resultMap="place">
+		select sp.*, ifnull(jjim_count.cnt, 0) as cnt
+		from star_place sp
+			left join (
+				select star_place_idx, count(*) as cnt
+				from jjim
+				group by star_place_idx
+				order by cnt desc, star_place_idx desc
+				limit 10
+			) jjim_count on sp.idx = jjim_count.star_place_idx
+		order by jjim_count.cnt desc, sp.idx desc
+		limit 10;
+	</select>
 
 	<resultMap
 		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO"

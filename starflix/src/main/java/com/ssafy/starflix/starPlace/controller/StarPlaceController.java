@@ -47,6 +47,13 @@ public class StarPlaceController {
 	
 	@Autowired
 	private TravelService tservice;
+	
+	@Operation(summary = "Best 명소 조회 - 10건")
+	@GetMapping("/best")
+	public ResponseEntity<?> getBestList() throws Exception{
+		
+		return ResponseEntity.ok().body(sservice.getBestList());
+	}
 
 	@Operation(summary = "목록조회")
 	@GetMapping()

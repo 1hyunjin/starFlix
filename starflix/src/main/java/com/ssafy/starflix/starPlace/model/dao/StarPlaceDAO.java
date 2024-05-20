@@ -27,4 +27,7 @@ public interface StarPlaceDAO {
 	// 명소 삭제 
 	int deleteOne(int idx) throws SQLException;
 	
+	// Best 명소 10건 조회
+	List<StarPlaceDTO> selectBestList() throws SQLException;
+	
 }
