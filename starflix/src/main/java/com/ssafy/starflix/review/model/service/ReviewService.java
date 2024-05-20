@@ -36,4 +36,7 @@ public class ReviewService {
 	public void deleteOne(int rno) throws Exception{
 		rdao.deleteOne(rno);
 	}
+	public List<ReviewDTO> gptList(int idx) throws Exception{
+		return rdao.selectGpt(idx);
+	}
 }

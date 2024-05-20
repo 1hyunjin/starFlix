@@ -37,6 +37,11 @@
 		where rno = #{rno}
 	</delete>
 	
+	<select id="selectGpt" resultMap="review">
+		select * from review 
+		where idx = #{idx}
+	</select>
+	
 	<resultMap
 		type="com.ssafy.starflix.review.model.dto.ReviewRequestDTO"
 		id="reviewRequest">
