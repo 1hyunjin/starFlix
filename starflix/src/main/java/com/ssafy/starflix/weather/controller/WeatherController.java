@@ -22,7 +22,7 @@ public class WeatherController {
 	private WeatherService wservice;
 
 	@GetMapping(value = "", produces = "application/json")
-	public List<WeatherDTO> getWeatherData(@RequestParam("date") String date) throws Exception {
+	public List<List<WeatherDTO>> getWeatherData(@RequestParam("date") String date) throws Exception {
 		try {
 			return wservice.getWeatherDataForRegion(date);
 		} catch (Exception e) {

@@ -6,10 +6,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,8 +26,7 @@ public class WeatherService {
 	private static String serviceKey = "UuxOS17nvqpC2QYJPA%2BQlTx41Jln2ZiXptAG81ndjleA6wF1Zczi1JASBPKrr7JyKcDhMvF1MGZQRBFZt9UiXw%3D%3D";
 	private static String apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 
-	public List<WeatherDTO> getWeatherDataForRegion(String baseDate) throws Exception {
-		List<WeatherDTO> allWeatherData = new ArrayList<>();
+	public List<List<WeatherDTO>> getWeatherDataForRegion(String baseDate) throws Exception {
 
 		String[][] regions = { { "서울", "60", "127" }, { "부산", "98", "76" }, { "대구", "89", "90" }, { "인천", "55", "124" },
 				{ "광주", "58", "74" }, { "대전", "67", "100" }, { "울산", "102", "84" }, { "세종", "66", "103" },
@@ -32,17 +34,32 @@ public class WeatherService {
 				{ "전라남도", "51", "67" }, { "경상북도", "87", "106" }, { "경상남도", "91", "77" }, { "제주", "52", "38" },
 				{ "강원도", "73", "134" } };
 
+		List<CompletableFuture<List<WeatherDTO>>> futures = new ArrayList<>();
+
 		for (String[] region : regions) {
 			String regionName = region[0];
 			String nx = region[1];
 			String ny = region[2];
 
-			System.out.println(Arrays.toString(region));
-
-			String jsonResponse = getInfoWeather(baseDate, nx, ny);
-			allWeatherData.addAll(parseWeatherData(jsonResponse, regionName));
+			CompletableFuture<List<WeatherDTO>> future = CompletableFuture.supplyAsync(() -> {
+				try {
+					String jsonResponse = getInfoWeather(baseDate, nx, ny);
+					return parseWeatherData(jsonResponse, regionName);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return new ArrayList<>();
+				}
+			});
+			futures.add(future);
 		}
-		return allWeatherData;
+
+		CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+		CompletableFuture<List<WeatherDTO>> allWeatherDataFuture = allOf.thenApply(
+				v -> futures.stream().flatMap(future -> future.join().stream()).collect(Collectors.toList()));
+
+		List<WeatherDTO> allWeatherData = allWeatherDataFuture.get();
+
+		return groupWeatherDataByDate(allWeatherData);
 	}
 
 	public String getInfoWeather(String baseDate, String nx, String ny) throws Exception {
@@ -64,7 +81,7 @@ public class WeatherService {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
+//		System.out.println("Response code: " + conn.getResponseCode());
 		BufferedReader rd;
 		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -80,7 +97,6 @@ public class WeatherService {
 		conn.disconnect();
 
 		String result = sb.toString();
-//		System.out.println("API Response: " + result);
 
 		return result;
 	}
@@ -109,6 +125,7 @@ public class WeatherService {
 					weatherDTO.setRegion(regionName);
 					weatherDTO.setFcsDate(fcstDate);
 					weatherDTO.setFcsTime(fcstTime);
+					weatherDTO.setFcsDateTime(fcstDate, fcstTime);
 
 					if ("SKY".equals(category)) {
 						weatherDTO.setWeatherState(item.getString("fcstValue"));
@@ -119,7 +136,6 @@ public class WeatherService {
 					weatherMap.put(key, weatherDTO);
 				}
 			}
-			System.out.println(weatherMap.values());
 			weatherDTOList.addAll(weatherMap.values());
 
 		} catch (Exception e) {
@@ -127,5 +143,18 @@ public class WeatherService {
 		}
 		System.out.println("weatherDTOList : " + weatherDTOList);
 		return weatherDTOList;
+	}
+
+	public List<List<WeatherDTO>> groupWeatherDataByDate(List<WeatherDTO> weatherData) {
+		return weatherData.stream()
+				.collect(Collectors.groupingBy(WeatherDTO::getFcsDate, LinkedHashMap::new,
+						Collectors.mapping(weather -> weather, Collectors.toList())))
+				.entrySet().stream()
+				.map(entry -> entry.getValue().stream().sorted(Comparator.comparing(WeatherDTO::getFcsDateTime)) // Date
+																													// 객체로
+																													// 정렬
+						.collect(Collectors.toList()))
+				.sorted(Comparator.comparing(list -> list.get(0).getFcsDate())) // 날짜별로 오름차순 정렬
+				.collect(Collectors.toList());
 	}
 }
