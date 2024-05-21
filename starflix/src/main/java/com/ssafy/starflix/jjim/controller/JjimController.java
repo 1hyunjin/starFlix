@@ -55,7 +55,7 @@ public class JjimController {
 
 	@Operation(summary = "명소 찜 취소")
 	@PostMapping("/unJjim")
-	public ResponseEntity<?> unJjimPlace(@RequestParam("idx") @Parameter(description = "명소 번호") int starPlace,
+	public ResponseEntity<?> unJjimPlace(@RequestParam("starPlace") @Parameter(description = "명소 번호") int starPlace,
 			@RequestParam("userId") @Parameter(description = "회원 아이디") String userId) {
 		try {
 			jservice.unJjimPlace(userId, starPlace);
