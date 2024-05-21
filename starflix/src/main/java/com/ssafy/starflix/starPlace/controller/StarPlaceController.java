@@ -76,7 +76,7 @@ public class StarPlaceController {
 		}
 	}
 	
-	@Operation(summary = "명소 상세조회", description = "명소 상세 조회 및 해당 명소에 대해 유저가 찜을 했는지 상태 반환")
+	@Operation(summary = "명소 상세조회", description = "명소 상세 조회 및 해당 명소에 대해 유저가 찜을 했는지 상태 반환(찜을 했으면 1, 안했으면 0)")
 	@GetMapping("/{idx}")
 	public ResponseEntity<?> getPlace(@PathVariable("idx") @Parameter(description = "명소 번호") int idx
 			, HttpServletRequest request) throws Exception {
