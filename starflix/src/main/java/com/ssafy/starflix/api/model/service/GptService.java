@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import com.ssafy.starflix.api.model.dto.ChatGptMessage;
 import com.ssafy.starflix.api.model.dto.GptRequest;
 import com.ssafy.starflix.api.model.dto.GptResponse;
+import com.ssafy.starflix.api.model.dto.GptReviewDTO;
 import com.ssafy.starflix.config.GptConfig;
 import com.ssafy.starflix.review.model.dto.ReviewDTO;
 
@@ -37,7 +38,7 @@ public class GptService {
 	@Value("${openai.apiKey}")
 	private String apiKey;
 
-	public String generateAnswers(List<ReviewDTO> reviewList) {
+	public GptReviewDTO generateAnswers(List<ReviewDTO> reviewList) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -49,24 +50,12 @@ public class GptService {
 
 		List<ChatGptMessage> messages = new ArrayList<>();
 
-		messages.add(ChatGptMessage.builder()
-				.role("system")
-				.content(GptConfig.SYSTEM_CONTENT)
-				.build());
-		messages.add(ChatGptMessage.builder()
-				.role("user")
-				.content(GptConfig.USER_CONTENT)
-				.build());
-		messages.add(ChatGptMessage.builder()
-				.role("assistant")
-				.content(GptConfig.ASSISTANT_CONTENT)
-				.build());
-		messages.add(ChatGptMessage.builder()
-				.role("user")
-				.content(sb.toString())
-				.build());
+		messages.add(ChatGptMessage.builder().role("system").content(GptConfig.SYSTEM_CONTENT).build());
+		messages.add(ChatGptMessage.builder().role("user").content(GptConfig.USER_CONTENT).build());
+		messages.add(ChatGptMessage.builder().role("assistant").content(GptConfig.ASSISTANT_CONTENT).build());
+		messages.add(ChatGptMessage.builder().role("user").content(sb.toString()).build());
 		GptRequest request = new GptRequest(CHAT_MODEL, MAX_TOKEN, TEMPERATURE, STREAM, messages);
-	
+
 		// header 설정 및 GPT API 호출
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(AUTHORIZATION, BEARER + apiKey);
@@ -84,6 +73,40 @@ public class GptService {
 
 		System.out.println("content : " + content);
 
-		return content;
+		GptReviewDTO gptReviewDTO = new GptReviewDTO();
+
+		String[] lines = content.split("\\n");
+
+		// 각 줄을 반복하면서 필드에 해당하는 값을 추출하여 GptReviewDTO 객체에 설정합니다.
+		for (String line : lines) {
+			// 각 줄을 ":"를 기준으로 분할하여 필드 이름과 값으로 나눕니다.
+			String[] parts = line.split(":");
+			if (parts.length == 2) {
+				String fieldName = parts[0].trim();
+				String value = parts[1].trim();
+				// 필드 이름에 따라 적절한 필드에 값을 설정합니다.
+				switch (fieldName) {
+				case "rate":
+					gptReviewDTO.setRate(Double.parseDouble(value));
+					break;
+				case "summary":
+					gptReviewDTO.setSummary(value);
+					break;
+				case "pros":
+					gptReviewDTO.setPros(value);
+					break;
+				case "cons":
+					gptReviewDTO.setCons(value);
+					break;
+				default:
+					// 다른 필드는 무시합니다.
+					break;
+				}
+			}
+		}
+		// 수정된 메서드는 GptReviewDTO 객체를 반환합니다.
+		System.out.println(gptReviewDTO);
+		return gptReviewDTO;
+//		return content;
 	}
 }

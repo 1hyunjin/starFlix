@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.starflix.api.model.dto.GptReviewDTO;
 import com.ssafy.starflix.api.model.service.GptService;
 import com.ssafy.starflix.review.model.dto.ReviewDTO;
 import com.ssafy.starflix.review.model.service.ReviewService;
@@ -26,7 +27,7 @@ public class GptController {
 	@GetMapping("/reviews")
 	public ResponseEntity<?> generateReviews(@RequestParam int idx) throws Exception{
 		List<ReviewDTO> reviewList = rservice.gptList(idx);
-		String result = gptService.generateAnswers(reviewList);
+		GptReviewDTO result = gptService.generateAnswers(reviewList);
 		return ResponseEntity.ok(result);
 	}
 }

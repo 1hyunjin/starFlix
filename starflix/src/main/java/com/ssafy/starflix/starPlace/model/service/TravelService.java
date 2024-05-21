@@ -24,6 +24,10 @@ public class TravelService {
 	}
 	
 	public List<CampDTO> getCampingList(int idx) throws Exception{
-		return cdao.getList(idx);
+		List<CampDTO> list = cdao.getList(idx);
+		for (CampDTO campDTO : list) {
+			campDTO.setType(40);
+		}
+		return list;
 	}
 }

@@ -35,4 +35,7 @@ public class CampDTO {
 
 	@Schema(description = "경도")
 	private double longj;
+	
+	@Schema(description = "관광타입")
+	private int type;
 }
