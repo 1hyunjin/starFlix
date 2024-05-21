@@ -12,8 +12,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Schema(title = "JjimDTO : 찜 정보", description = "유저가 찜한 명소 정보")
-public class JjimDTO {
+@Schema(title = "JjimResponseDTO : 유저가 찜한 명소 정보")
+public class JjimResponseDTO {
 	
 	@Schema(description = "찜 번호")
 	private int idx;
@@ -24,5 +24,10 @@ public class JjimDTO {
 	@Schema(description = "명소 번호")
 	private int starPlace;
 	
+	@Schema(description = "명소 이름")
+	private String title;
+	
+	@Schema(description = "명소 사진")
+	private String img;
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.starflix.jjim.model.dao.JjimDAO">
-
 	<insert id="insert">
 		insert into jjim (user_id, star_place_idx)
 		values
@@ -10,20 +9,25 @@
 
 	<delete id="delete">
 		delete from jjim
-		where user_id = #{userId} and star_place_idx =
+		where user_id = #{userId} and
+		star_place_idx =
 		#{starPlace}
 	</delete>
 
-	<select id="getList" resultMap="jjim">
-		select * from jjim
-		where user_id = #{userId}
-		order by idx desc;
+	<select id="getList" resultMap="jjimResponse">
+		select j.*, s.title, s.img
+		from
+		jjim j join star_place s
+		on j.star_place_idx = s.idx
+		where j.user_id = #{userId}
+		order by j.idx desc;
 	</select>
-	
+
 	<select id="findByUserId">
 		select count(*)
-		from jjim 
-		where user_id = #{userId} and star_place_idx = #{starPlace};
+		from jjim
+		where user_id = #{userId} and
+		star_place_idx = #{starPlace};
 	</select>
 
 	<resultMap type="com.ssafy.starflix.jjim.model.dto.JjimDTO"
@@ -32,4 +36,15 @@
 		<result property="userId" column="user_id" />
 		<result property="starPlace" column="star_place_idx" />
 	</resultMap>
+
+	<resultMap
+		type="com.ssafy.starflix.jjim.model.dto.JjimResponseDTO"
+		id="jjimResponse">
+		<result property="idx" column="idx" />
+		<result property="userId" column="user_id" />
+		<result property="starPlace" column="star_place_idx" />
+		<result property="title" column="title" />
+		<result property="img" column="img" />
+	</resultMap>
+
 </mapper>

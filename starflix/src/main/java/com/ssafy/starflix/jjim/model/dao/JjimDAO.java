@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.starflix.jjim.model.dto.JjimDTO;
+import com.ssafy.starflix.jjim.model.dto.JjimResponseDTO;
 
 @Mapper
 public interface JjimDAO {
@@ -15,7 +16,7 @@ public interface JjimDAO {
 	
 	void delete(@Param("userId") String userId, @Param("starPlace") int starPlace) throws SQLException;
 	
-	List<JjimDTO> getList(@Param("userId") String userId) throws SQLException;
+	List<JjimResponseDTO> getList(@Param("userId") String userId) throws SQLException;
 	
 	int findByUserId(@Param("userId") String userId, @Param("starPlace") int starPlace ) throws SQLException;
 }

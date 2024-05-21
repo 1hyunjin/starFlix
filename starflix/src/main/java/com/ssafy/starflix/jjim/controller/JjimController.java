@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.starflix.jjim.model.dto.JjimDTO;
+import com.ssafy.starflix.jjim.model.dto.JjimResponseDTO;
 import com.ssafy.starflix.jjim.model.service.JjimService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +33,8 @@ public class JjimController {
 	@GetMapping()
 	public ResponseEntity<?> getList(@RequestParam("userId") String userId) {
 		try {
-			List<JjimDTO> list = jservice.getList(userId);
+			List<JjimResponseDTO> list = jservice.getList(userId);
+			System.out.println(list);
 			return ResponseEntity.ok().body(list);
 		} catch (Exception e) {
 			return exceptionHandling(e);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.starflix.jjim.model.dao.JjimDAO;
 import com.ssafy.starflix.jjim.model.dto.JjimDTO;
+import com.ssafy.starflix.jjim.model.dto.JjimResponseDTO;
 
 @Service
 public class JjimService {
@@ -14,7 +15,7 @@ public class JjimService {
 	@Autowired
 	private JjimDAO jdao;
 
-	public List<JjimDTO> getList(String userId) throws Exception {
+	public List<JjimResponseDTO> getList(String userId) throws Exception {
 		return jdao.getList(userId);
 	}
 
