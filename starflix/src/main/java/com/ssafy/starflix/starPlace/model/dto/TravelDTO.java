@@ -29,5 +29,17 @@ public class TravelDTO {
 	
 	@Schema(description = "관광지사진")
 	private String img;
+	
+	@Schema(description = "시도코드")
+	private int sidoCode;
+	
+	@Schema(description = "시도코드")
+	private int gugunCode;
+	
+	@Schema(description = "위도")
+	private double lati;
+
+	@Schema(description = "경도")
+	private double longj;
 
 }

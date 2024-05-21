@@ -3,10 +3,9 @@
 <mapper
 	namespace="com.ssafy.starflix.starPlace.model.dao.TravelDAO">
 
-	<select id="getListOfType"
-		resultType="com.ssafy.starflix.starPlace.model.dto.TravelDTO">
+	<select id="getListOfType" resultMap="travel">
 		<![CDATA[
-			select t.idx, t.type, t.title, t.addr, t.img,
+			select t.*, 
 			(6371 * acos(cos(radians(s.lati)) * cos(radians(t.lati)) * cos(radians(t.long) - radians(s.long)) + sin(radians(s.lati)) * sin(radians(t.lati)))) AS distance
 			From travel t , star_place s
 			where s.idx = #{idx} and t.type = #{type}
@@ -15,7 +14,6 @@
 		]]>
 	</select>
 
-
 	<resultMap
 		type="com.ssafy.starflix.starPlace.model.dto.TravelDTO" id="travel">
 		<result property="idx" column="idx" />
@@ -23,6 +21,10 @@
 		<result property="title" column="title" />
 		<result property="addr" column="addr" />
 		<result property="img" column="img" />
-	</resultMap>
+		<result property="sidoCode" column="sido_code" />
+		<result property="gugunCode" column="gugun_code" />
+		<result property="lati" column="lati" />
+		<result property="longj" column="long" />
 
+	</resultMap>
 </mapper>

@@ -29,4 +29,10 @@ public class CampDTO {
 	
 	@Schema(description = "사진")
 	private String img;
+	
+	@Schema(description = "위도")
+	private double lati;
+
+	@Schema(description = "경도")
+	private double longj;
 }
