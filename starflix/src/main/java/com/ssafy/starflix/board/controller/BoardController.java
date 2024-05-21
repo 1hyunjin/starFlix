@@ -53,7 +53,7 @@ public class BoardController {
 	}
 
 	@Operation(summary = "게시글 글 작성")
-	@PostMapping("/write")
+	@PostMapping()
 	public ResponseEntity<?> writeArticle(@RequestBody(required = false) @Parameter(description = "BoardRequestDTO") BoardRequestDTO board) throws Exception {
 		try {
 			bservice.writeArticle(board);
