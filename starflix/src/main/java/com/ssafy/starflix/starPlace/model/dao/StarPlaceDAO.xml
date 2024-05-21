@@ -3,7 +3,7 @@
 <mapper
 	namespace="com.ssafy.starflix.starPlace.model.dao.StarPlaceDAO">
 
-	<select id="selectList">
+	<select id="selectList" resultMap="place">
 		select * from star_place
 		where public = 'Y'
 		<include refid="search"></include>

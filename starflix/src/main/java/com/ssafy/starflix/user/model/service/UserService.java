@@ -20,7 +20,6 @@ public class UserService {
 	@Autowired
 	private UserDAO udao;
 	
-
 	public LoginDTO login(LoginDTO dto) throws Exception {
 		return udao.login(dto);
 	}
