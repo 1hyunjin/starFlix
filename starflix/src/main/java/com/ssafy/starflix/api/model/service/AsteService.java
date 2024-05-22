@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -27,8 +26,8 @@ import com.ssafy.starflix.api.model.dto.AsteDTO;
 @Service
 public class AsteService {
 	
-//	@Value("${api.astronomy.serviceKey}")
-	private static String serviceKey = "muDWw8bNdOZVdOBkwbCtTiXv9keYEUrIznfKjytg5H2foRwBg39CS4nqA2bqCzDN+ieM8LD3IhcX1nq/EXGsBQ==";
+	@Value("${astronomy.serviceKey}")
+	private String serviceKey; // = "UuxOS17nvqpC2QYJPA%2BQlTx41Jln2ZiXptAG81ndjleA6wF1Zczi1JASBPKrr7JyKcDhMvF1MGZQRBFZt9UiXw%3D%3D";
 	private static String apiUrl = "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getAreaRiseSetInfo";
 	
 	
@@ -42,7 +41,7 @@ public class AsteService {
 			String xmlResponse = getXmlData(locdate, region);
 			asteList.addAll(parseXml(xmlResponse));
 		}
-		System.out.println("asteList : " + asteList);
+//		System.out.println("asteList : " + asteList);
 		 return asteList;
 	}
 	
@@ -52,7 +51,6 @@ public class AsteService {
         urlBuilder.append("&" + URLEncoder.encode("locdate","UTF-8") + "=" + URLEncoder.encode(locdate, "UTF-8")); /*날짜*/
         urlBuilder.append("&" + URLEncoder.encode("location","UTF-8") + "=" + URLEncoder.encode(location, "UTF-8")); /*지역*/
         URL url = new URL(urlBuilder.toString());
-        System.out.println("url : " + url);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -71,7 +69,6 @@ public class AsteService {
         rd.close();
         conn.disconnect();
         String result = sb.toString();
-        System.out.println(result);
         return result;
 	}
 	
