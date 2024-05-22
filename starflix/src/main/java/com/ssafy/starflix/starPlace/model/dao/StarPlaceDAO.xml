@@ -67,7 +67,9 @@
 	</select>
 	
 	<select id="selectByUserId" resultMap="place">
-		select * from star_place where writer = #{userId}
+		select * 
+		from star_place 
+		where trim(writer) = #{userId}
 	</select>
 
 	<resultMap
