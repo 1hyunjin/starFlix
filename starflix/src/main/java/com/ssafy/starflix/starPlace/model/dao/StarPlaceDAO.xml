@@ -65,6 +65,10 @@
 		order by jjim_count.cnt desc, sp.idx desc
 		limit 10;
 	</select>
+	
+	<select id="selectByUserId" resultMap="place">
+		select * from star_place where writer = #{userId}
+	</select>
 
 	<resultMap
 		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO"

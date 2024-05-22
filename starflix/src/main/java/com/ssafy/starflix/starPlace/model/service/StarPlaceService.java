@@ -54,4 +54,9 @@ public class StarPlaceService {
 	public List<StarPlaceDTO> getBestList() throws Exception{
 		return sdao.selectBestList();
 	}
+	
+	// 유저별 등록한 명소 리스트 조회
+	public List<StarPlaceDTO> getListByUserId(String userId) throws Exception{
+		return sdao.selectByUserId(userId);
+	}
 }

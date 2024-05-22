@@ -30,4 +30,7 @@ public interface StarPlaceDAO {
 	// Best 명소 10건 조회
 	List<StarPlaceDTO> selectBestList() throws SQLException;
 	
+	// 유저별 등록한 명소 조회
+	List<StarPlaceDTO> selectByUserId(String userId) throws SQLException;
+	
 }

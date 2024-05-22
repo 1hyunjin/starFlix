@@ -63,6 +63,12 @@ public class StarPlaceController {
 		List<StarPlaceDTO> list = sservice.getList(map);
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@Operation(summary = "유저가 등록한 명소 목록 조회")
+	@GetMapping("/userId")
+	public ResponseEntity<?> getListByUserId(@RequestParam("userId") String userId) throws Exception{
+		return ResponseEntity.ok().body(sservice.getListByUserId(userId));
+	}
 
 	// 명소 등록 
 	@Operation(summary = "명소 등록")

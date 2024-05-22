@@ -27,8 +27,8 @@ import com.ssafy.starflix.api.model.dto.AsteDTO;
 @Service
 public class AsteService {
 	
-	@Value("${api.astronomy.serviceKey}")
-	private static String serviceKey;
+//	@Value("${api.astronomy.serviceKey}")
+	private static String serviceKey = "muDWw8bNdOZVdOBkwbCtTiXv9keYEUrIznfKjytg5H2foRwBg39CS4nqA2bqCzDN+ieM8LD3IhcX1nq/EXGsBQ==";
 	private static String apiUrl = "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getAreaRiseSetInfo";
 	
 	
@@ -42,17 +42,17 @@ public class AsteService {
 			String xmlResponse = getXmlData(locdate, region);
 			asteList.addAll(parseXml(xmlResponse));
 		}
-		
+		System.out.println("asteList : " + asteList);
 		 return asteList;
 	}
 	
 	public String getXmlData(String locdate, String location) throws IOException {
-		
 		StringBuilder urlBuilder = new StringBuilder(apiUrl); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("locdate","UTF-8") + "=" + URLEncoder.encode(locdate, "UTF-8")); /*날짜*/
         urlBuilder.append("&" + URLEncoder.encode("location","UTF-8") + "=" + URLEncoder.encode(location, "UTF-8")); /*지역*/
         URL url = new URL(urlBuilder.toString());
+        System.out.println("url : " + url);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -71,7 +71,7 @@ public class AsteService {
         rd.close();
         conn.disconnect();
         String result = sb.toString();
-    
+        System.out.println(result);
         return result;
 	}
 	
