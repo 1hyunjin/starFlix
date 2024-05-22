@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.starflix.api.model.dao.MeteorDAO">
+
+	<insert id="insert"
+		parameterType="com.ssafy.starflix.api.model.dto.MeteorDTO">
+		insert into meteor (year, locdate, astro_title, astro_event)
+		values (#{year}, #{locdate}, #{astroTitle}, #{astroEvent})
+	</insert>
+	
+	<select id="selectList" resultMap="meteor">
+		select * from meteor
+		where year = #{year}
+	</select>
+
+	<resultMap type="com.ssafy.starflix.api.model.dto.MeteorDTO"
+		id="meteor">
+		<result property="year" column="year" />
+		<result property="locdate" column="locdate" />
+		<result property="astroTitle" column="astro_title" />
+		<result property="astroEvent" column="astro_event" />
+	</resultMap>
+</mapper>

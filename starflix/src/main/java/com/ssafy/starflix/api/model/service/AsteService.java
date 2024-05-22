@@ -27,7 +27,7 @@ import com.ssafy.starflix.api.model.dto.AsteDTO;
 public class AsteService {
 	
 	@Value("${astronomy.serviceKey}")
-	private String serviceKey; // = "UuxOS17nvqpC2QYJPA%2BQlTx41Jln2ZiXptAG81ndjleA6wF1Zczi1JASBPKrr7JyKcDhMvF1MGZQRBFZt9UiXw%3D%3D";
+	private String serviceKey;
 	private static String apiUrl = "http://apis.data.go.kr/B090041/openapi/service/RiseSetInfoService/getAreaRiseSetInfo";
 	
 	
