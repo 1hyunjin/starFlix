@@ -32,7 +32,7 @@
 	<select id="selectOne" resultMap="place">
 		select * from star_place
 		where
-		idx = #{idx} and public = 'Y';
+		idx = #{idx};
 	</select>
 
 	<update id="updatePublic">
