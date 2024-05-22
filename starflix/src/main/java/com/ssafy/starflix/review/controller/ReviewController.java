@@ -37,7 +37,7 @@ public class ReviewController {
 	@Operation(summary = "리뷰 목록 조회")
 	@GetMapping()
 	public ResponseEntity<?> getReviews(
-			@RequestParam @Parameter(description = "리뷰 조회 조건(명소 또는 유저 아이디).") Map<String, String> map)
+			@RequestParam @Parameter(description = "리뷰 조회 조건(명소(starPlace) 또는 유저 아이디(userId)).") Map<String, String> map)
 			throws Exception {
 		System.out.println(map);
 		List<ReviewDTO> reviewList = rservice.getList(map);
@@ -77,6 +77,13 @@ public class ReviewController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
+	}
+	
+	@Operation(summary = "리뷰 상세조회")
+	@GetMapping("/{rno}")
+	public ResponseEntity<?> getReview(@PathVariable("rno") @Parameter(description = "리뷰 번호") int rno) throws Exception {
+		
+		return ResponseEntity.ok().body(rservice.getReview(rno));
 	}
 
 	// error

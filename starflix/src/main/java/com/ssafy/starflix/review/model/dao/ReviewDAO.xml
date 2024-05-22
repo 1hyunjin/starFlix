@@ -41,6 +41,10 @@
 		select * from review 
 		where idx = #{idx}
 	</select>
+
+	<select id="selectOne" resultMap="review">
+		select * from review where rno = #{rno}
+	</select>
 	
 	<resultMap
 		type="com.ssafy.starflix.review.model.dto.ReviewRequestDTO"

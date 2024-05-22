@@ -39,4 +39,8 @@ public class ReviewService {
 	public List<ReviewDTO> gptList(int idx) throws Exception{
 		return rdao.selectGpt(idx);
 	}
+	
+	public ReviewDTO getReview(int rno) throws Exception{
+		return rdao.selectOne(rno);
+	}
 }

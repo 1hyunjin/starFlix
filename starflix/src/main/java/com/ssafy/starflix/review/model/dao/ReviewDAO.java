@@ -23,4 +23,6 @@ public interface ReviewDAO {
 	void deleteOne(@Param("rno") int rno) throws SQLException;
 	
 	List<ReviewDTO> selectGpt(int idx) throws SQLException;
+	
+	ReviewDTO selectOne(int rno) throws SQLException;
 }
