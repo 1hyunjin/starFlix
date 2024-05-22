@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.starflix.board.model.dto.BoardDTO;
 import com.ssafy.starflix.board.model.dto.BoardRequestDTO;
@@ -12,8 +13,12 @@ import com.ssafy.starflix.board.model.dto.BoardRequestDTO;
 @Mapper
 public interface BoardDAO {
 
-	// 커뮤니티 게시글 목록
-	List<BoardDTO> selectList(Map<String, String> param) throws SQLException;
+	// 커뮤니티 게시글 목록 & 페이징 처리 
+	List<BoardDTO> selectList(@Param("param") Map<String, String> param, @Param("sr") int startRow,
+			@Param("count") int count) throws SQLException;
+
+	// 총 게시글의 개수
+	int selectTotalCount() throws SQLException;
 
 	// 게시글 글보기
 	BoardDTO selectOne(int bno) throws SQLException;

@@ -5,19 +5,25 @@
 	<select id="selectList" resultMap="board">
 		select * from board
 		<include refid="search"></include>
-		order by bno desc;
+		order by bno desc
+		limit #{sr}, #{count}
 	</select>
 
 	<sql id="search">
-		<if test="keyword !=  null and keyword != ''">
-			<if test="type == 'title'">
-				where title like concat('%', #{keyword}, '%')
+		<if test="param.keyword !=  null and param.keyword != ''">
+			<if test="param.type == 'title'">
+				where title like concat('%', #{param.keyword}, '%')
 			</if>
-			<if test="type != 'title'">
-				where writer like concat('%', #{keyword}, '%')
+			<if test="param.type != 'title'">
+				where writer like concat('%', #{param.keyword}, '%')
 			</if>
 		</if>
 	</sql>
+	
+	<select id="selectTotalCount" resultType="int">
+		select count(bno) from board;
+	</select>
+	
 	<select id="selectOne" parameterType="int" resultMap="board">
 		select b.*
 		from board b, user u

@@ -17,12 +17,40 @@ public class BoardService {
 
 	@Autowired
 	private LikeService lservice;
-
-	public List<BoardDTO> getList(Map<String, String> map) throws Exception {
-		Map<String, String> param = new HashMap<String, String>();
+	
+	public Map<String, Object> getList(Map<String, String> map, int curPage) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, String> param = new  HashMap<>();
 		param.put("type", map.get("type") == null ? "" : map.get("type"));
 		param.put("keyword", map.get("keyword") == null ? "" : map.get("keyword"));
-		return bdao.selectList(param);
+		
+		int startPage = (curPage-1)/ 10*10+1;
+		int endPage = startPage+9;
+		
+		int totalCount = bdao.selectTotalCount();
+		int totalPage = totalCount/10;
+		
+		if(totalCount%10 > 0) {
+			totalPage++;
+		}
+		
+		if(totalPage < endPage) {
+			endPage = totalPage;
+		}
+		
+		int startRow = (curPage-1)*10;
+		int count = 10;
+		List<BoardDTO> boardList = bdao.selectList(param, startRow, count);
+		
+		result.put("curPage", curPage);
+		result.put("startPage", startPage);
+		result.put("endPage", endPage);
+		result.put("totalPage", totalPage);
+		result.put("boardList", boardList);
+		
+		return result;
+		//return bdao.selectList(param);
 	}
 
 	public BoardDTO getArticle(int bno) throws Exception {

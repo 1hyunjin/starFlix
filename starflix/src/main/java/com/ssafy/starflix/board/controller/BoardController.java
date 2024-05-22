@@ -38,11 +38,10 @@ public class BoardController {
 
 	@Operation(summary = "커뮤니티 게시글 목록조회")
 	@GetMapping()
-	public ResponseEntity<?> getList(@RequestParam @Parameter(description = "검색 조건(타입(title, writer) , 키워드).") Map<String, String> map) throws Exception {
+	public ResponseEntity<?> getList(@RequestParam @Parameter(description = "검색 조건(타입(title, writer) , 키워드).") Map<String, String> map,
+									 @RequestParam(value="page", defaultValue = "1") @Parameter(description = "page 정보") int page) throws Exception {
 
-		List<BoardDTO> list = bservice.getList(map);
-
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(bservice.getList(map, page));
 	}
 
 	@Operation(summary = "게시글 글 보기")
