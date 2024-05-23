@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ssafy.starflix.starPlace.model.dao.StarPlaceDAO">
+
+	<select id="selectList" resultMap="place">
+		select * from star_place
+		where public = 'Y'
+		<include refid="search"></include>
+		order by idx desc;
+	</select>
+
+	<sql id="search">
+		<if test="keyword != null and keyword != ''">
+			<if test="type == 'title' ">
+				and title like concat('%', #{keyword}, '%')
+			</if>
+			<if test="type != 'title' ">
+				and addr like concat('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+
+	<insert id="insert"
+		parameterType="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO">
+		insert into star_place (title, addr, writer, content,
+		img, lati, `long`, public)
+		values (#{title}, #{addr},#{writer},
+		#{content}, #{img}, #{lati}, #{longj}, #{isPublic})
+	</insert>
+
+	<select id="selectOne" resultMap="place">
+		select * from star_place
+		where
+		idx = #{idx};
+	</select>
+
+	<update id="updatePublic">
+		update star_place
+		set public = 'Y'
+		where idx = #{idx}
+	</update>
+
+	<update id="updatePrivate">
+		update star_place
+		set public = 'N'
+		where idx = #{idx}
+	</update>
+
+	<delete id="deleteOne">
+		delete from star_place
+		where idx = #{idx}
+	</delete>
+
+	<select id="selectBestList" resultMap="place">
+		select sp.*, ifnull(jjim_count.cnt, 0) as cnt
+		from star_place sp
+			left join (
+				select star_place_idx, count(*) as cnt
+				from jjim
+				group by star_place_idx
+				order by cnt desc, star_place_idx desc
+				limit 10
+			) jjim_count on sp.idx = jjim_count.star_place_idx
+		order by jjim_count.cnt desc, sp.idx desc
+		limit 10;
+	</select>
+	
+	<select id="selectByUserId" resultMap="place">
+		select * 
+		from star_place 
+		where trim(writer) = #{userId}
+	</select>
+
+	<resultMap
+		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceRequestDTO"
+		id="starPlaceRequestDTO">
+		<result property="title" column="title" />
+		<result property="addr" column="addr" />
+		<result property="content" column="content" />
+		<result property="img" column="img" />
+		<result property="lati" column="lati" />
+		<result property="longj" column="long" />
+		<result property="isPublic" column="public" />
+		<result property="writer" column="writer" />
+	</resultMap>
+
+	<resultMap
+		type="com.ssafy.starflix.starPlace.model.dto.StarPlaceDTO" id="place">
+		<result property="idx" column="idx" />
+		<result property="title" column="title" />
+		<result property="addr" column="addr" />
+		<result property="writer" column="writer" />
+		<result property="content" column="content" />
+		<result property="img" column="img" />
+		<result property="lati" column="lati" />
+		<result property="longj" column="long" />
+		<result property="isPublic" column="public" />
+		<result property="registerTime" column="register_time" />
+	</resultMap>
+</mapper>

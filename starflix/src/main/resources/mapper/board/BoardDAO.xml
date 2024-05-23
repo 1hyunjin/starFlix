@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.starflix.board.model.dao.BoardDAO">
+
+	<select id="selectList" resultMap="board">
+		select * from board
+		<include refid="search"></include>
+		order by bno desc
+		limit #{sr}, #{count}
+	</select>
+
+	<sql id="search">
+		<if test="param.keyword !=  null and param.keyword != ''">
+			<if test="param.type == 'title'">
+				where title like concat('%', #{param.keyword}, '%')
+			</if>
+			<if test="param.type != 'title'">
+				where writer like concat('%', #{param.keyword}, '%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectTotalCount" resultType="int">
+		select count(bno) from board;
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultMap="board">
+		select b.*
+		from board b, user u
+		where b.writer = u.user_id
+		and b.bno = #{bno}
+	</select>
+
+	<insert id="insertOne"
+		parameterType="com.ssafy.starflix.board.model.dto.BoardRequestDTO">
+		insert into board (title, content, writer)
+		values
+		(#{title}, #{content}, #{writer})
+	</insert>
+
+	<update id="updateOne"
+		parameterType="com.ssafy.starflix.board.model.dto.BoardRequestDTO">
+		update board
+		set title = #{title}, content = #{content}
+		where bno = #{bno}
+	</update>
+
+	<delete id="deleteOne" parameterType="int">
+		delete from board
+		where bno
+		= #{bno}
+	</delete>
+
+	<update id="updateReadCount" parameterType="int">
+		update board
+		set
+		read_count = read_count+1
+		where bno = #{bno}
+	</update>
+
+	<update id="increaseHitCount" parameterType="int">
+		update board
+		set
+		hit_count = hit_count+1
+		where bno = #{bno}
+	</update>
+
+	<update id="decreaseHitCount" parameterType="int">
+		update board
+		set
+		hit_count = hit_count-1
+		where bno = #{bno}
+	</update>
+
+	<resultMap
+		type="com.ssafy.starflix.board.model.dto.BoardRequestDTO"
+		id="boardRequest">
+		<result property="bno" column="bno" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+	</resultMap>
+
+	<resultMap type="com.ssafy.starflix.board.model.dto.BoardDTO"
+		id="board">
+
+		<result property="bno" column="bno" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="writer" column="writer" />
+		<result property="readCount" column="read_count" />
+		<result property="hitCount" column="hit_count" />
+		<result property="registerTime" column="register_time" />
+
+	</resultMap>
+</mapper>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.starflix.user.model.dao.UserDAO">
+
+	<select id="login"
+		parameterType="com.ssafy.starflix.user.model.dto.LoginDTO"
+		resultMap="loginDTO">
+		select user_id, user_name, user_email
+		from user
+		where user_id
+		=
+		#{userId} and user_pw=#{userPw}
+	</select>
+
+	<insert id="regist"
+		parameterType="com.ssafy.starflix.user.model.dto.UserRequestDTO">
+		insert into user (user_id, user_pw, user_name,
+		user_email)
+		values(#{userId}, #{userPw}, #{userName}, #{userEmail});
+	</insert>
+
+	<select id="userInfo" parameterType="String" resultMap="user">
+		select *
+		from user where user_id = #{id}
+	</select>
+
+	<update id="changeInfo"
+		parameterType="com.ssafy.starflix.user.model.dto.UserRequestDTO">
+		update user set user_name = #{userName},
+		user_email=#{userEmail}, user_pw = #{userPw} where user_id=#{userId}
+	</update>
+
+	<delete id="deleteUser" parameterType="String">
+		delete from user where
+		user_id=#{id}
+	</delete>
+
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set
+		refresh_token = #{refreshToken}
+		where user_id = #{userId}
+	</update>
+	
+	<update id="changePw">
+		update user
+		set 
+			user_pw = #{userPw}
+		where user_id = #{userId}
+	</update>
+
+	<select id="getRefreshToken" resultType="String"
+		parameterType="String">
+		select refresh_token
+		where user_id = #{userId}
+	</select>
+
+	<select id="deleteRefreshToken">
+		update user
+		set refresh_token = null
+		where user_id =
+		#{userId}
+	</select>
+	
+	<select id="getEmailByUserId" resultType="String">
+		select user_email 
+		from user 
+		where user_id = #{userId}
+	</select>
+
+	<resultMap
+		type="com.ssafy.starflix.user.model.dto.UserRequestDTO"
+		id="userRequestDTO">
+		<result property="userId" column="user_id" />
+		<result property="userPw" column="user_pw" />
+		<result property="userName" column="user_name" />
+		<result property="userEmail" column="user_email" />
+	</resultMap>
+
+	<resultMap type="com.ssafy.starflix.user.model.dto.LoginDTO"
+		id="loginDTO">
+		<result property="userId" column="user_id" />
+		<result property="userPw" column="user_pw" />
+	</resultMap>
+
+	<resultMap type="com.ssafy.starflix.user.model.dto.UserDTO"
+		id="user">
+		<result property="userId" column="user_id" />
+		<result property="userPw" column="user_pw" />
+		<result property="userName" column="user_name" />
+		<result property="userEmail" column="user_email" />
+		<result property="refreshToken" column="refresh_token" />
+
+	</resultMap>
+</mapper>
