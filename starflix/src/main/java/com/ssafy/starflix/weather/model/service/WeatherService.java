@@ -18,7 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.starflix.weather.model.WeatherDTO;
+import com.ssafy.starflix.weather.model.dto.WeatherDTO;
 
 @Service
 public class WeatherService {
@@ -141,7 +141,7 @@ public class WeatherService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("weatherDTOList : " + weatherDTOList);
+//		System.out.println("weatherDTOList : " + weatherDTOList);
 		return weatherDTOList;
 	}
 

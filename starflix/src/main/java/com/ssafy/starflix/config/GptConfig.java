@@ -20,8 +20,6 @@ public class GptConfig {
 			+ "[3] 장점 : 리뷰에서 긍정적으로 나타내고 있는 부분들을 키워드와 같이 추출하여 생성합니다.\n"
 			+ "[4] 단점 : 리뷰에서 부정적으로 나타내고 있는 부분들을 키워드와 같이 추출하여 생성합니다.\n" 
 			+ "rate는 평점, summary는 요약, pros는 장점, cons는 단점입니다.";
-//			+ "output format은 json 형태로 지정합니다.\n"
-//			+ "`{\"rate\":0,\"summary\":\"<YOUR_SUMMARY>\",\"pros\":\"<YOUR_PROS>\",\"\":\"<YOUR_CONS>\"}`";
 	
 	public static final String USER_CONTENT = "전망이 너무 멋졌지만, 서비스가 상당히 느렸어요. 전반적으로는 즐거운 경험이었습니다.\n"
 			+ "<p>시설은 최고 수준이었고 직원들은 정말 친절했습니다. 하지만 위치가 조금 외진 편이었습니다.</p>\n"
@@ -32,9 +30,6 @@ public class GptConfig {
 												+ "summary: 전망 멋짐, 시설 최고, 분위기 아늑, 주변 아름다움\n"
 												+ "pros: 전망 멋짐, 시설 최고, 직원 친절, 분위기 아늑\n"
 												+"cons:서비스 느림, 위치 외진, 청결도 부족, 접근성 문제";
-	//= "{\"rate\":3.5,\"summary\":\"전망 멋짐, 시설 최고, 음식 맛있음, 접근성 불편\",\"pros\":\"전망 멋짐, 시설 최고, 직원 친절, 음식 맛있음, 분위기 아늑\",\"cons\":\"서비스 느림, 위치 외진, 청결도 부족, 접근성 문제\"}";
-	
-	
 	
 	@Bean
     public RestTemplate restTemplate() {
@@ -55,7 +50,6 @@ public class GptConfig {
             } catch (Throwable throwable) {
                 throw new RuntimeException(throwable);
             }
-//            return retryTemplate.execute(context -> execution.execute(request, body));
         });
     }
 }

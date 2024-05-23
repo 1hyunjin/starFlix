@@ -1,4 +1,4 @@
-package com.ssafy.starflix.weather.model;
+package com.ssafy.starflix.weather.model.dto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
