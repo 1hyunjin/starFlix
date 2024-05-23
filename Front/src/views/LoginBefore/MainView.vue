@@ -24,6 +24,10 @@ onMounted(() => {
       },
       (error) => {
         console.error('위치 정보를 가져오는 데 실패했습니다.', error);
+        myLocation.value.latitude = 37.566812940739034;
+        myLocation.value.longitude = 126.97865509180069;
+        mapInfo.value.latitude = 37.566812940739034;
+        mapInfo.value.longitude = 126.97865509180069;
       }
     );
   }
