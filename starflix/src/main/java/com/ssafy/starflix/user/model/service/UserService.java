@@ -56,4 +56,8 @@ public class UserService {
 		udao.deleteRefreshToken(userId);
 	}
 	
+	public String getEmailByUserId(String userId) throws Exception{
+		return udao.getEmailByUserId(userId);
+	}
+	
 }

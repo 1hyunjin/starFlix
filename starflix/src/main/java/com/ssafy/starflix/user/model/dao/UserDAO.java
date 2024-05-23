@@ -28,4 +28,6 @@ public interface UserDAO {
 	void deleteRefreshToken(String id) throws SQLException;
 	
 	String getRefreshToken(String id) throws SQLException;
+	
+	String getEmailByUserId(String userId) throws SQLException;
 }

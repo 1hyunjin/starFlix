@@ -54,6 +54,12 @@
 		where user_id =
 		#{userId}
 	</select>
+	
+	<select id="getEmailByUserId" resultType="String">
+		select user_email 
+		from user 
+		where user_id = #{userId}
+	</select>
 
 	<resultMap
 		type="com.ssafy.starflix.user.model.dto.UserRequestDTO"

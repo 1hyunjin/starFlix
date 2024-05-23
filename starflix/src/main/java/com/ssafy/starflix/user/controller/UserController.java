@@ -98,6 +98,16 @@ public class UserController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	@Operation(summary = "아이디로 회원인지 확인", description = "아이디 입력 시 db에서 회원존재시 email 데이터 반환, 회원 아이디 존재하지 않을 시 null 반환")
+	@GetMapping()
+	public ResponseEntity<?> getEmail(@RequestParam("userId") String userId) throws Exception{
+		Map<String, Object> resultMap = new HashMap<>();
+		String email = uservice.getEmailByUserId(userId);
+		
+		resultMap.put("userEmail", email);
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+	}
 
 	// 회원정보 상세
 	@Operation(summary = "회원정보", description = "회원 정보를 담은 토큰을 반환한다. ")
