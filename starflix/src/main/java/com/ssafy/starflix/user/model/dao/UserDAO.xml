@@ -41,6 +41,13 @@
 		refresh_token = #{refreshToken}
 		where user_id = #{userId}
 	</update>
+	
+	<update id="changePw">
+		update user
+		set 
+			user_pw = #{userPw}
+		where user_id = #{userId}
+	</update>
 
 	<select id="getRefreshToken" resultType="String"
 		parameterType="String">

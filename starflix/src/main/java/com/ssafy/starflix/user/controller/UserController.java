@@ -129,6 +129,14 @@ public class UserController {
 		uservice.changeInfo(userRequestDTO);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
+	
+	// 회원 비밀번호 변경 
+	@Operation(summary = "비밀번호 수정", description = "이메일로 발급받은 비밀번호로 수정")
+	@PutMapping("")
+	public ResponseEntity<?> changePw(@RequestParam("userId")  @Parameter(description = "회원 아이디") String userId, @RequestParam("userPw")  @Parameter(description = "임시 비밀번호") String userPw) throws Exception {
+		uservice.changePw(userId, userPw);
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 
 	// 회원정보 삭제
 	@Operation(summary = "회원정보 삭제", description = "토큰 확인 후 회원정보 삭제")

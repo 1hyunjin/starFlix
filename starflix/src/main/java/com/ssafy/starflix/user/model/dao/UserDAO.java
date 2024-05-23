@@ -30,4 +30,6 @@ public interface UserDAO {
 	String getRefreshToken(String id) throws SQLException;
 	
 	String getEmailByUserId(String userId) throws SQLException;
+	
+	int changePw(@Param("userId") String userId, @Param("userPw") String userPw) throws SQLException;
 }

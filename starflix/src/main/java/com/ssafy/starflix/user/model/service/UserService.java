@@ -60,4 +60,8 @@ public class UserService {
 		return udao.getEmailByUserId(userId);
 	}
 	
+	public int changePw(String userId, String userPw) throws Exception {
+		return udao.changePw(userId, userPw);
+	}
+	
 }
