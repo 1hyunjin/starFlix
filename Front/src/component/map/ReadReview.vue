@@ -31,7 +31,7 @@ const movePage = (val, rno) => {
       query: { type: 'placeReview', idx, rno: rno },
     });
   } else {
-    router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx } });
+    router.push({ name: 'placeReview', query: { type: 'placeReview', idx } });
   }
 };
 const deleteReview = async (rno) => {
