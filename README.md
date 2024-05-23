@@ -63,7 +63,6 @@
 | --- | 
 | ![easyme](README.assets/날씨.PNG)| 
 | ![easyme](README.assets/천문박명.PNG)| 
-| ![easyme](README.assets/.PNG)| 
 | 사용자가 비밀번호를 분실할 때 사용자의 아이디로 가입유무를 확인한 후 이메일주소로 임시비밀번호를 발송합니다. 비밀번호는 정규식에 의해 영문자+숫자+특수문자를 포함한 8~15글자 사이의 랜덤 데이터입니다.   |
 
 | spring 스케쥴러| 
@@ -114,7 +113,7 @@
 
 ----
 ## 📃 요구사항 명세서
-![easyme](README.assets/타이틀.png)   
+![easyme](README.assets/요구사항.png)   
 
 ----
 ## 📃 유스케이스 다이어그램
