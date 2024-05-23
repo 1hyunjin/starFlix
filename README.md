@@ -1,93 +1,82 @@
-# pjt_daejeon_11th_class8_final_team09
+# 별과 바람과 그대와 함께. <br/> 별명소 제공 서비스 - **STARFLIX**
+![easyme](/assets/readme/cartoon.png)   
+
+## ❓ **STARFLIX** 가 뭔가요??
+- **STARFLIX**는 **<u>사용자에게 별명소 정보를 제공해주는 서비스</u>** 입니다.
+- 별명소 지도, 나만의 찜, 커뮤니티 등 다양한 정보를 제공합니다.  
+- 그 외에도 날씨, 천문박명, 유성우NEWS, GPT리뷰 분석 기능도 제공합니다.
+****
+### ⌚ 개발기간
+- 24.05.16 ~ 24.05.23
+****
+### 🙍‍♂️🙍‍♀️ 멤버구성
+- 오진영 : FE 개발, UI 디자인 
+- 유현진 : BE 개발, DB 구축
+****
+
+## 🖥 기술 스택 
+##### FE
+- `Vue.js`
+- `Bootstrap`
+- `KakaoMap`
+- `VS code`
+##### BE
+- `spring Boot`
+- `Mybatis`
+- `Mysql`
+- `STS`
+##### ETC
+- `Chat GPT 3.5`
+- `Figma`
+- `Notion`
+
+## 🛠 기능 엿보기   
 
 
+| 번호| 기능 | 기능설명|
+| --- | --- | --- |
+| 1 | 사용자 GPS 정보 로드 | 사용자가 접속한 지역의 위도 경도를 로드합니다. |
+| 2 | 임시비밀번호 발급 | 비밀번호 분실 시 이메일로 임시비밀번호를 보냅니다. |
+| 3 | 모달정보 제공 | 날씨, 천문박명, 유성우 데이터를 모달창으로 제공합니다. |
+| 4 | spring 스케쥴러 | 특정 시간에 데이터를 자동으로 불러옵니다. |
+| 5 | 마크업 기반 커뮤니티 제공 | 더욱 다양한 게시글을 작성할 수 있습니다. |
+| 6 | 카카오맵 기반 명소 검색 | 카카오맵 기반으로 데이터를 검색 할 수 있습니다. |
+| 7 | 명소 주변 정보 및 리뷰 제공 | 명소의 5km 이내 정보와 리뷰를 제공합니다. |
+| 8 | GPT 명소 리뷰 분석 | 명소 리뷰를 GPT가 심층분석 합니다. |
+| 9 | 명소 찜 제공 | 사용자가 찜리스트에 원하는 정보를 저장합니다. |
+| 10 | 한눈에 볼 수 있는 마이메뉴 | 등록한 명소, 리뷰들을 한눈에 관리할 수 있습니다. |
+| 11 | 반응형 웹서비스 | PC 및 모바일 환경에서 쾌적한 서비스가 가능합니다. |
 
-## Getting started
+## 🔍 기능 상세설명
+| 기능| 
+| --- | 
+| ![onealog](/assets/readme/easyme.png)    | 
+| 설명    | 
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+----
+## 📃 요구사항 명세서
 
-## Add your files
+----
+## 📃 유스케이스 다이어그램
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+----
+## 📃 클래스 다이어그램
 
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/wlsdud6221/pjt_daejeon_11th_class8_final_team09.git
-git branch -M master
-git push -uf origin master
-```
+----
+## 📃 ERD
 
-## Integrate with your tools
+----
+## 📃 화면 설계
 
-- [ ] [Set up project integrations](https://lab.ssafy.com/wlsdud6221/pjt_daejeon_11th_class8_final_team09/-/settings/integrations)
+   
+## 프로젝트 후기록
 
-## Collaborate with your team
+- 오진영 : 우선.. 관통프로젝트를 입과 전 후기글로 몇번 봤었는데 1주일의 짧은 기간에 이걸 어떻게 하지 싶었습니다.. 근데 역시 할 수 있으니까 시키는거였네요.. 1주일 동안 새로운 영역에서 많은걸 보고 배우고 느꼈는데 2학기 가서도 이런 경험이 많았으면 좋겠습니다. 
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-## Test and Deploy
+- 유현진 : 짧은 기간동안 준비한 프로젝트였지만, 주제를 잘 선정하고 페어와 함께 체계적으로 프로젝트를 진행할 수 있어서 좋았습니다. 
+이번 프로젝트를 통해서 지금껏 사용하지 못했던 알고리즘과 기술들을 사용하면서 원하는 기능을 하나하나 구현해가면서 백엔드 경험을 쌓을 수 있었습니다.
+또한 처음으로 RESTAPI 규칙을 준수하면서 api를 작성했기에 REST에 대해 학습할 수 있는 좋은 기회였다고 생각합니다. 
+진영아 수고 많았다 :blush:
 
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
