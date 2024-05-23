@@ -208,6 +208,7 @@ section {
   color: white;
   margin: 0 auto;
   overflow: auto;
+  text-align: start;
 }
 /* 토스트 UI 에디터에서 생성되는 이미지의 스타일을 수정 */
 .tui-editor-contents img {
