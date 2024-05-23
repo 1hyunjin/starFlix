@@ -1,5 +1,5 @@
 # 별과 바람과 그대와 함께. <br/> 별명소 제공 서비스 - **STARFLIX**
-![easyme](/assets/readme/cartoon.png)   
+![easyme](README.assets/타이틀.png)   
 
 ## ❓ **STARFLIX** 가 뭔가요??
 - **STARFLIX**는 **<u>사용자에게 별명소 정보를 제공해주는 서비스</u>** 입니다.
@@ -48,26 +48,106 @@
 | 11 | 반응형 웹서비스 | PC 및 모바일 환경에서 쾌적한 서비스가 가능합니다. |
 
 ## 🔍 기능 상세설명
-| 기능| 
+| 스플래쉬 화면| 
 | --- | 
-| ![onealog](/assets/readme/easyme.png)    | 
-| 설명    | 
+| ![easyme](README.assets/스플래쉬.PNG)| 
+| 초기화면에 필요한 데이터를 가져올 때 스플래쉬 화면을 제공하여 렌더링 지연 방지를 예방합니다. 그리고 사용자의 GSP좌표 권한을 얻어 위도 경도 데이터를 얻고 이를 활용해 주소로 변환합니다. 권한이 없을 경우 서울시청이 디폴트값입니다.   | 
 
+| 임시 비밀번호 발급| 
+| --- | 
+| ![easyme](README.assets/임시비번1.PNG)| 
+| ![easyme](README.assets/임시비번2.PNG)| 
+| 사용자가 비밀번호를 분실할 때 사용자의 아이디로 가입유무를 확인한 후 이메일주소로 임시비밀번호를 발송합니다. 비밀번호는 정규식에 의해 영문자+숫자+특수문자를 포함한 8~15글자 사이의 랜덤 데이터입니다.   |
+
+| 모달정보 제공| 
+| --- | 
+| ![easyme](README.assets/날씨.PNG)| 
+| ![easyme](README.assets/천문박명.PNG)| 
+| ![easyme](README.assets/.PNG)| 
+| 사용자가 비밀번호를 분실할 때 사용자의 아이디로 가입유무를 확인한 후 이메일주소로 임시비밀번호를 발송합니다. 비밀번호는 정규식에 의해 영문자+숫자+특수문자를 포함한 8~15글자 사이의 랜덤 데이터입니다.   |
+
+| spring 스케쥴러| 
+| --- | 
+| ![easyme](README.assets/스케쥴러.PNG)|  
+| 유성우 데이터를 서버로부터 받습니다. 데이터는 매년 1월 1일에 스케쥴러를 통해 자동으로 받아옵니다.   |
+
+| 마크업 기반 커뮤니티 제공| 
+| --- | 
+| ![easyme](README.assets/글쓰기.PNG)|  
+| ![easyme](README.assets/글읽기.PNG)|  
+| 커뮤니티와 리뷰는 마크업기반으로 제작되었습니다. 그래서 일반 게시판과는 달리 여러 데이터를 생성할 수 있습니다.  |
+
+| 카카오맵 기반 명소 검색| 
+| --- | 
+| ![easyme](README.assets/명소검색.PNG)|  
+| ![easyme](README.assets/명소상세.PNG)|  
+| ![easyme](README.assets/명소등록.PNG)| 
+| 카카오맵 api를 활용하여 지도서비스를 제공합니다. 이에 주소검색과 키워드검색을 사용자에게 제공하여 알맞은 데이터를 출력하고 상세정보도 확인 가능합니다. 명소 등록은 지도 이동 후 클릭시 해당지역의 위도, 경도와 주소값을 반환하고 사진첨부와 공개여부를 설정할 수 있습니다. 비공개 데이터는 검색에서 제외됩니다.  |
+
+| 명소 주변 정보 및 리뷰 제공| 
+| --- | 
+| ![easyme](README.assets/주변정보.PNG)|  
+| ![easyme](README.assets/리뷰.PNG)|  
+| 해당 명소 상세페이지에서 주변정보를 클릭시 반경 5km이내에 있는 여행정보를 타입별로 불러옵니다. 타입마다 마커는 다르게 생성됩니다. 또한 리뷰는 해당 명소에 회원들이 등록한 리뷰들을 출력합니다.   |
+
+| GPT 명소 리뷰 분석| 
+| --- | 
+| ![easyme](README.assets/GPT리뷰.PNG)|  
+| ![easyme](README.assets/gpt.png)|  
+| 회원들이 작성한 해당 지역 명소를 GPT가 분석합니다. 분석된 내용은 평점, 요약, 장점, 단점입니다.    |
+
+| 명소 찜 제공| 
+| --- | 
+| ![easyme](README.assets/찜.PNG)|  
+| 사용자는 마음에 드는 명소를 본인의 찜 리스트에 추가할 수 있습니다. 추가된 리스트는 따로 관리할 수 있으며 삭제도 가능합니다. 많이 찜이 된 명소는 Best 명소에 등재됩니다.    |
+
+| 한눈에 볼 수 있는 마이메뉴| 
+| --- | 
+| ![easyme](README.assets/등록명소.PNG)|  
+| ![easyme](README.assets/등록리뷰.png)|  
+| 등록된 데이터들을 한눈에 관리할 수 있습니다.    |
+
+| 반응형 웹서비스| 
+| --- | 
+| ![easyme](README.assets/반응형.PNG)|   
+| 웹 환경뿐만 아니라 태블릿, 모바일환경에도 쾌적한 서비스가 제공되도록 반응형 서비스를 제공합니다.   |
 
 ----
 ## 📃 요구사항 명세서
+![easyme](README.assets/타이틀.png)   
 
 ----
 ## 📃 유스케이스 다이어그램
+![easyme](README.assets/로그인유스.png)
+- 로그인/회원가입 유스케이스 다이어그램
+
+
+![easyme](README.assets/지도유스.png)  
+- 별명소 지도 유스케이스 다이어그램
+
+
+![easyme](README.assets/보드유스.png)   
+- 게시판 유스케이스 다이어그램
+
+
+![easyme](README.assets/명소유스.png)
+- 명소 찜 유스케이스 다이어그램
+
+
+![easyme](README.assets/마이유스.png) 
+- 마이페이지 유스케이스 다이어그램        
 
 ----
 ## 📃 클래스 다이어그램
+![easyme](README.assets/class.png)   
 
 ----
 ## 📃 ERD
+![easyme](README.assets/ERD.png)   
 
 ----
 ## 📃 화면 설계
+![easyme](README.assets/화면설계.png)   
 
    
 ## 프로젝트 후기록
