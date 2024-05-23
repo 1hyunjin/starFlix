@@ -717,7 +717,6 @@ li {
 .weatherContent {
   position: relative;
   width: 100%;
-  border: 1px solid red;
   background-image: url('../../assets/img/weather.png');
   height: 500px;
   background-position: center center;
@@ -726,7 +725,6 @@ li {
 .asteContent {
   position: relative;
   width: 100%;
-  border: 1px solid red;
   background-image: url('../../assets/img/weather.png');
   height: 500px;
   background-position: center center;

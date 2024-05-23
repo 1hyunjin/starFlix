@@ -30,13 +30,18 @@ const route = useRoute();
 const router = useRouter();
 const mode = route.query.type;
 
-onBeforeRouteLeave(() => {
-  //맵을 나가면 모든 기록들 초기화
-  place.value = null;
-  aroundList.value = null;
-  searchList.value = null;
-  mapInfo.value.latitude = myLocation.value.latitude; //맵을 나가면 얘는 내 기준으로 다시 설정
-  mapInfo.value.longitude = myLocation.value.longitude;
+onBeforeRouteLeave((to, from, next) => {
+  console.log(to.name, from.name, next);
+  // 맵을 나가면 모든 기록들 초기화
+  if (to.name != 'addPlace' && from.name != 'placeInfo') {
+    place.value = null;
+    aroundList.value = null;
+    searchList.value = null;
+    mapInfo.value.latitude = myLocation.value.latitude; //맵을 나가면 얘는 내 기준으로 다시 설정
+    mapInfo.value.longitude = myLocation.value.longitude;
+    console.log('삭제');
+  }
+  next();
 });
 
 const movePage = (val) => {
