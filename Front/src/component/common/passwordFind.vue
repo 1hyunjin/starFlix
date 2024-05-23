@@ -137,7 +137,7 @@ input::placeholder {
   color: white;
   font-size: 20px;
   font-weight: bold;
-  display: none;
+  /* display: none; */
   margin-bottom: 20px;
 }
 .none {

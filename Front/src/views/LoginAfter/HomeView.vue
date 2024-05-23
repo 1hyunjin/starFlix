@@ -76,6 +76,13 @@ const goInfo = async () => {
     left: 0px !important;
   }
 }
+@media (max-width: 500px) {
+  .modalDiv {
+    flex-direction: column;
+    height: 100px !important;
+    width: fit-content !important;
+  }
+}
 .content {
   min-height: 100vh;
   background-image: url('@/assets/img/homeImg.png');
