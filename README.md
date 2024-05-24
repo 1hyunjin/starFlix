@@ -30,6 +30,10 @@
 - `Figma`
 - `Notion`
 
+###  ✏ 시장분석
+![easyme](README.assets/시장분석.PNG)
+****
+
 ## 🛠 기능 엿보기   
 
 
