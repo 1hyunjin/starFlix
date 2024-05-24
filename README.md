@@ -103,7 +103,7 @@
 | 한눈에 볼 수 있는 마이메뉴| 
 | --- | 
 | ![easyme](README.assets/등록명소.PNG)|  
-| ![easyme](README.assets/등록리뷰.png)|  
+| ![easyme](README.assets/등록리뷰.PNG)|  
 | 등록된 데이터들을 한눈에 관리할 수 있습니다.    |
 
 | 반응형 웹서비스| 
